@@ -1,4 +1,4 @@
-package bjfu.six.mall.entity;
+package bjfu.eight.mall.entity.po;
 
 import java.util.Date;
 

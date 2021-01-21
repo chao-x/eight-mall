@@ -17,10 +17,12 @@ public interface UsersMapper {
 
     @Select("select * from action_users where account = #{account}")
     public List<Users> selectByAccount(String account);
+
     @Select("select * from action_users where id = #{id}")
     public List<Users> selectById(String id);
 
     Integer updateUsers(Users users);
 
+    @Select("select * from action_users where del = 0")
     public List<Users> getAll();
 }

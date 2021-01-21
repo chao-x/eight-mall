@@ -9,12 +9,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.LinkedList;
 import java.util.List;
 
 //用户模块
 @Controller
-public class UserController {
+public class UserControllerBack {
     @Autowired
     UserService userService;
 
@@ -64,7 +65,7 @@ public class UserController {
     //后台管理用户登录接口
     @PostMapping("/actionmall/mgr/user/login.do")
     @ResponseBody
-    public HTTP login(@RequestBody User user) {
+    public HTTP login(@RequestBody User user, HttpSession session) {
         List<User> users = new LinkedList<>();
         users = userService.getUserByAccount(user.getAccount());
         if (users.size() == 0 || !users.get(0).getPassword().equals(user.getPassword())) {
@@ -72,6 +73,7 @@ public class UserController {
         } else if (users.get(0).getRole() != 1) {
             return HTTP.ERROR("不是管理员,无法登录！");
         } else {
+            session.setAttribute("user",user);
             return HTTP.SUCCESS("登陆成功", users.get(0));
         }
     }

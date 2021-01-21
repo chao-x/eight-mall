@@ -37,7 +37,23 @@ public class UserService {
         return usersMapper.updateUsers(user) == 0;
     }
 
+    public boolean updateUser2(User user) {
+        return usersMapper.updateUsers2(user) == 0;
+    }
+
+    public boolean updatePassword(String oldpwd, String newpwd, int id) {
+        return usersMapper.updatePassword(oldpwd, newpwd, id) == 0;
+    }
+
+    public boolean updatePassword2(String newpwd, int id) {
+        return usersMapper.updatePassword2(newpwd, id) == 0;
+    }
+
     public List<User> getUserByAccount(String account) {
         return usersMapper.selectByAccount(account);
+    }
+
+    public boolean insertUser(User user){
+        return usersMapper.insertUser(user)==1;
     }
 }

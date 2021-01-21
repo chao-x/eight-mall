@@ -47,4 +47,6 @@ public class FindProducts {
     int pageNum;
     int pageSize;
     String name;
+
+
 }

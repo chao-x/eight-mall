@@ -62,5 +62,12 @@ public class HTTP {
         response.setMsg(msg);
         return response;
     }
+
+    public static HTTP ERROR(String msg,int status) {
+        HTTP response = new HTTP();
+        response.setStatus(status);
+        response.setMsg(msg);
+        return response;
+    }
 }
 

@@ -1,6 +1,7 @@
 package bjfu.eight.mall.service;
 
 import bjfu.eight.mall.entity.po.Products;
+import bjfu.eight.mall.entity.vo.FindProducts;
 import bjfu.eight.mall.entity.vo.Floors;
 import bjfu.eight.mall.mapper.ProductsMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,5 +41,17 @@ public class ProductService {
             }
         }
         return floors;
+    }
+
+    public List<Products>findHotProducts(){
+        return productsMapper.findHotProducts();
+    }
+
+    public List<Products>findProductsByID(int id){
+        return productsMapper.findProductsByID(id);
+    }
+
+    public List<Products>findProducts(FindProducts findProducts){
+        return productsMapper.findProductsBySort(findProducts);
     }
 }

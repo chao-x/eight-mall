@@ -3,7 +3,15 @@ package bjfu.eight.mall.entity.po;
 import java.util.Date;
 
 public class Products {
-    private String id;
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    private Integer id;
     private String name;
     private String product_id;
     private String parts_id;
@@ -26,14 +34,6 @@ public class Products {
 
     private Date created;
     private Date updated;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

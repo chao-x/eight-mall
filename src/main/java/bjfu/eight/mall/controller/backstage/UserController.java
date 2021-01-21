@@ -1,7 +1,7 @@
 package bjfu.eight.mall.controller.backstage;
 
 import bjfu.eight.mall.common.HTTP;
-import bjfu.eight.mall.entity.po.Users;
+import bjfu.eight.mall.entity.po.User;
 import bjfu.eight.mall.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +21,7 @@ public class UserController {
     //更新用户信息接口
     @PostMapping("/actionmall/mgr/user/updateuser.do")
     @ResponseBody
-    public HTTP updateUser(@RequestBody Users user) {
+    public HTTP updateUser(@RequestBody User user) {
         if (userService.updateUser(user)) {
             return HTTP.SUCCESS("用户信息修改成功", user);
         } else {
@@ -32,8 +32,8 @@ public class UserController {
     //查找用户信息接口
     @PostMapping("/actionmall/mgr/user/finduser.do")
     @ResponseBody
-    public HTTP findUser(@RequestBody Users user) {
-        List<Users> users = new LinkedList<>();
+    public HTTP findUser(@RequestBody User user) {
+        List<User> users = new LinkedList<>();
         users = userService.selectUser(user.getId());
         if (users.size() == 0) {
             return HTTP.ERROR("获取用户信息失败");
@@ -46,7 +46,7 @@ public class UserController {
     //删除用户接口
     @PostMapping("/actionmall/mgr/user/deleteusers.do")
     @ResponseBody
-    public HTTP deleteUser(@RequestBody Users user) {
+    public HTTP deleteUser(@RequestBody User user) {
         if (!userService.deleteUser(user.getId())) {
             return HTTP.ERROR("用户存在订单无法删除");
         } else {
@@ -66,8 +66,8 @@ public class UserController {
     //后台管理用户登录接口
     @PostMapping("/actionmall/mgr/user/login.do")
     @ResponseBody
-    public HTTP login(@RequestBody Users user) {
-        List<Users> users = new LinkedList<>();
+    public HTTP login(@RequestBody User user) {
+        List<User> users = new LinkedList<>();
         users = userService.getUserByAccount(user.getAccount());
         if (users.size() == 0 || !users.get(0).getPassword().equals(user.getPassword())) {
             return HTTP.ERROR("密码错误！");

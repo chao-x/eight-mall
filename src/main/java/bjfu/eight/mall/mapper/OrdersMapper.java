@@ -1,6 +1,6 @@
 package bjfu.eight.mall.mapper;
 
-import bjfu.eight.mall.entity.po.Orders;
+import bjfu.eight.mall.entity.po.Order;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
@@ -17,7 +17,7 @@ public interface OrdersMapper {
    // public Orders getByOrderno(String orederno);
 
     @Select("select * from action_orders where uid = uid")
-    public List<Orders> getByUserid(String uid);
+    public List<Order> getByUserid(int uid);
 
     //int updateOrders(Orders orders);
 }

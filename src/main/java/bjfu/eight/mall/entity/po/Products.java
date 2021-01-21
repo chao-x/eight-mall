@@ -1,28 +1,33 @@
 package bjfu.eight.mall.entity.po;
 
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class Products {
-    private String id;
+    private int id;
     private String name;
-    private String product_id;
-    private String parts_id;
-    private String icon_url;
-    private String sub_images;
+    private int productId;
+    private int partsId;
+    private String iconUrl;
+    private String subImages;
     private String detail;
-    private String spec_param;
-    private Double price;
-    private Integer stock;
-    private Integer status;
-    private Integer is_hot;
-    private Date crated;
+    private String specParam;
+    private double price;
+    private int stock;
+    private int status;
+    private int isHot;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    private Date created;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date updated;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -34,36 +39,36 @@ public class Products {
         this.name = name;
     }
 
-    public String getProduct_id() {
-        return product_id;
+    public int getProductId() {
+        return productId;
     }
 
-    public void setProduct_id(String product_id) {
-        this.product_id = product_id;
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
-    public String getParts_id() {
-        return parts_id;
+    public int getPartsId() {
+        return partsId;
     }
 
-    public void setParts_id(String parts_id) {
-        this.parts_id = parts_id;
+    public void setPartsId(int partsId) {
+        this.partsId = partsId;
     }
 
-    public String getIcon_url() {
-        return icon_url;
+    public String getIconUrl() {
+        return iconUrl;
     }
 
-    public void setIcon_url(String icon_url) {
-        this.icon_url = icon_url;
+    public void setIconUrl(String iconUrl) {
+        this.iconUrl = iconUrl;
     }
 
-    public String getSub_images() {
-        return sub_images;
+    public String getSubImages() {
+        return subImages;
     }
 
-    public void setSub_images(String sub_images) {
-        this.sub_images = sub_images;
+    public void setSubImages(String subImages) {
+        this.subImages = subImages;
     }
 
     public String getDetail() {
@@ -74,52 +79,52 @@ public class Products {
         this.detail = detail;
     }
 
-    public String getSpec_param() {
-        return spec_param;
+    public String getSpecParam() {
+        return specParam;
     }
 
-    public void setSpec_param(String spec_param) {
-        this.spec_param = spec_param;
+    public void setSpecParam(String specParam) {
+        this.specParam = specParam;
     }
 
-    public Double getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
-    public Integer getStock() {
+    public int getStock() {
         return stock;
     }
 
-    public void setStock(Integer stock) {
+    public void setStock(int stock) {
         this.stock = stock;
     }
 
-    public Integer getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
-    public Integer getIs_hot() {
-        return is_hot;
+    public int getIsHot() {
+        return isHot;
     }
 
-    public void setIs_hot(Integer is_hot) {
-        this.is_hot = is_hot;
+    public void setIsHot(int isHot) {
+        this.isHot = isHot;
     }
 
-    public Date getCrated() {
-        return crated;
+    public Date getCreated() {
+        return created;
     }
 
-    public void setCrated(Date crated) {
-        this.crated = crated;
+    public void setCreated(Date created) {
+        this.created = created;
     }
 
     public Date getUpdated() {

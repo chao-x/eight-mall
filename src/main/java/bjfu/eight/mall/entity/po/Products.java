@@ -15,7 +15,16 @@ public class Products {
     private Integer stock;
     private Integer status;
     private Integer is_hot;
-    private Date crated;
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    private Date created;
     private Date updated;
 
     public String getId() {
@@ -112,14 +121,6 @@ public class Products {
 
     public void setIs_hot(Integer is_hot) {
         this.is_hot = is_hot;
-    }
-
-    public Date getCrated() {
-        return crated;
-    }
-
-    public void setCrated(Date crated) {
-        this.crated = crated;
     }
 
     public Date getUpdated() {

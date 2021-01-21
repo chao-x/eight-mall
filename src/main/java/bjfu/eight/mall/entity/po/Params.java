@@ -1,31 +1,36 @@
 package bjfu.eight.mall.entity.po;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
+
 public class Params {
-    private String id;
-    private String parent_id;
+    private int id;
+    private int parentId;
     private String name;
-    private Integer sort_order;
-    private Integer status;
-    private Integer level;
+    private int sortOrder;
+    private int status;
+    private int level;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date created;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date updated;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getParent_id() {
-        return parent_id;
+    public int getParentId() {
+        return parentId;
     }
 
-    public void setParent_id(String parent_id) {
-        this.parent_id = parent_id;
+    public void setParentId(int parentId) {
+        this.parentId = parentId;
     }
 
     public String getName() {
@@ -36,27 +41,27 @@ public class Params {
         this.name = name;
     }
 
-    public Integer getSort_order() {
-        return sort_order;
+    public int getSortOrder() {
+        return sortOrder;
     }
 
-    public void setSort_order(Integer sort_order) {
-        this.sort_order = sort_order;
+    public void setSortOrder(int sortOrder) {
+        this.sortOrder = sortOrder;
     }
 
-    public Integer getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
-    public Integer getLevel() {
+    public int getLevel() {
         return level;
     }
 
-    public void setLevel(Integer level) {
+    public void setLevel(int level) {
         this.level = level;
     }
 

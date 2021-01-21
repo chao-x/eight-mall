@@ -1,22 +1,34 @@
 package bjfu.eight.mall.entity.po;
 
-import java.util.Date;
 
 public class Address {
-    public String getId() {
+    private int id;
+    private int userId;
+    private String name;
+    private String phone;
+    private String mobile;
+    private String province;
+    private String city;
+    private String district;
+    private String addr;
+    private String zip;
+    private int defaultAddr;
+    private int delState;
+
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getUser_id() {
-        return user_id;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getName() {
@@ -83,51 +95,19 @@ public class Address {
         this.zip = zip;
     }
 
-    public Integer getDefault_addr() {
-        return default_addr;
+    public int getDefaultAddr() {
+        return defaultAddr;
     }
 
-    public void setDefault_addr(Integer default_addr) {
-        this.default_addr = default_addr;
+    public void setDefaultAddr(int defaultAddr) {
+        this.defaultAddr = defaultAddr;
     }
 
-    public Date getCreated() {
-        return created;
+    public int getDelState() {
+        return delState;
     }
 
-    public void setCreated(Date created) {
-        this.created = created;
+    public void setDelState(int delState) {
+        this.delState = delState;
     }
-
-    public Date getUpdated() {
-        return updated;
-    }
-
-    public void setUpdated(Date updated) {
-        this.updated = updated;
-    }
-
-    public Integer getDel_state() {
-        return del_state;
-    }
-
-    public void setDel_state(Integer del_state) {
-        this.del_state = del_state;
-    }
-
-    private String id;
-    private String user_id;
-    private String name;
-    private String phone;
-    private String mobile;
-    private String province;
-    private String city;
-    private String district;
-    private String addr;
-    private String zip;
-    private Integer default_addr;
-    private Date created;
-    private Date updated;
-    private Integer del_state;
-
 }

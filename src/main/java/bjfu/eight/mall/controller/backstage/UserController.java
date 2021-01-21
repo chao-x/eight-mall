@@ -52,8 +52,6 @@ public class UserController {
         } else {
             return HTTP.SUCCESS();
         }
-
-
     }
 
     //查询用户列表接口

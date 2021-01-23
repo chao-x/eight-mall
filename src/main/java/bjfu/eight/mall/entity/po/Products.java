@@ -3,6 +3,7 @@ package bjfu.eight.mall.entity.po;
 import java.util.Date;
 
 public class Products {
+
     public Integer getId() {
         return id;
     }

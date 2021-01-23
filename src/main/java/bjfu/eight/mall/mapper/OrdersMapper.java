@@ -15,13 +15,14 @@ public interface OrdersMapper {
 
     //int deleteById(String id);
 
-   // public Orders getByOrderno(String orederno);
+    @Select("select * from action_orders where order_no=#{orderno}")
+    public Order getByOrderno(long orederno);
+
+    @Select("select * from action_orders where uid = #{uid}")
+    public List<Order> getByUserid(int uid);
 
     @Update("update action_orders set status=#{status} where order_no=#{orderNo}")
     public int updateStatus(int status,long orderNo);
-
-    @Select("select * from action_orders where uid = uid")
-    public List<Order> getByUserid(String uid);
 
     //int updateOrders(Orders orders);
 }

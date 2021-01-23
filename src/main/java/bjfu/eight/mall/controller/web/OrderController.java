@@ -33,10 +33,10 @@ public class OrderController {
         try {
             User user=(User)session.getAttribute("user");
             if(user==null){
-                HTTP.ERROR("请登录后再进行操作！");
+               return HTTP.ERROR("请登录后再进行操作！");
             }
             else {
-
+                return HTTP.SUCCESS(orderService.getdetail(order.getOrderNo()));
             }
         }catch (RuntimeException e){
             e.printStackTrace();

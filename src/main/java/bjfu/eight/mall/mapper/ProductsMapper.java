@@ -34,12 +34,12 @@ public interface ProductsMapper {
     @Select("select * from action_products where name like '%${name}%' and product_id = #{productTypeId} and parts_id = #{partsId} and status <> 3 limit #{pageNum} , #{pageSize}")
     List<Products> findProductsBySort(FindProducts findProducts);
 
-    @Update("update action_products set status=#{status},hot=#{hot} where id=#{id}")
-        Integer updateById(Products products);
+    @Update("update action_products set status=#{status},hot=#{hot} where id={id}")
+    Integer updateById(Products products);
 
-@Insert("insert into action_product(name,product_id,parts_id,detail,spec_param,price,stock,sub_images) values(#{name},#{product_id},#{parts_id},#{detail},#{spec_param},#{price},#{stock},#{sub_images})")
+    @Insert("insert into action_product(name,product_id,parts_id,detail,spec_param,price,stock,sub_images) values(#{name},#{product_id},#{parts_id},#{detail},#{spec_param},#{price},#{stock},#{sub_images})")
     Integer insertProduct(Products products);
 
-@Update("update action_product set name=#{name},product_id=#{product_id},parts_id=#{parts_id},detail=#{detail},spec_param=#{spec_param},price=#{price},stock=#{price},sub_images=#{price}")
+    @Update("update action_product set name=#{name},product_id=#{product_id},parts_id=#{parts_id},detail=#{},spec_param=#{spec_param},price=#{price},stock=#{price},sub_images=#{price}")
     Integer updateProduct(Products products);
-            }
+}

@@ -51,6 +51,10 @@ public class ProductService {
         return productsMapper.findProductsByID(id);
     }
 
+    public List<Products> findProductsByProductID(Products products) {
+        return productsMapper.findProductByProduct_ID(products);
+    }
+
     public List<Products> findProductsByIDAll(int id) {
         if (id == -1) {
             return productsMapper.findProductsAll();

@@ -3,10 +3,10 @@ package bjfu.eight.mall.controller.web;
 import bjfu.eight.mall.common.HTTP;
 import bjfu.eight.mall.entity.po.Products;
 import bjfu.eight.mall.entity.vo.FindProducts;
+import bjfu.eight.mall.entity.vo.Num;
 import bjfu.eight.mall.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,8 +24,12 @@ public class ProductController {
 
     @PostMapping("/actionmall/product/findhotproducts.do")
     @ResponseBody
-    public HTTP findHotProducts(){
-        return HTTP.SUCCESS(productService.findHotProducts());
+    public HTTP findHotProducts(@RequestBody Num num){
+        int last=num.getNum();
+        if(num.getNum()>=productService.findHotProducts().size()){
+            last=productService.findHotProducts().size();
+        }
+        return HTTP.SUCCESS(productService.findHotProducts().subList(0,last));
     }
 
     @PostMapping("/actionmall/product/getdetail.do")

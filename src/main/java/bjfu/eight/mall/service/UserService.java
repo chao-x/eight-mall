@@ -34,26 +34,26 @@ public class UserService {
     }
 
     public boolean updateUser(User user) {
-        return usersMapper.updateUsers(user) == 0;
+        return usersMapper.updateUsers(user) == 1;
     }
 
     public boolean updateUser2(User user) {
-        return usersMapper.updateUsers2(user) == 0;
+        return usersMapper.updateUsers2(user) == 1;
     }
 
     public boolean updatePassword(String oldpwd, String newpwd, int id) {
-        return usersMapper.updatePassword(oldpwd, newpwd, id) == 0;
+        return usersMapper.updatePassword(oldpwd, newpwd, id) == 1;
     }
 
     public boolean updatePassword2(String newpwd, int id) {
-        return usersMapper.updatePassword2(newpwd, id) == 0;
+        return usersMapper.updatePassword2(newpwd, id) == 1;
     }
 
     public List<User> getUserByAccount(String account) {
         return usersMapper.selectByAccount(account);
     }
 
-    public boolean insertUser(User user){
-        return usersMapper.insertUser(user)==1;
+    public boolean insertUser(User user) {
+        return usersMapper.insertUser(user) == 1;
     }
 }

@@ -22,7 +22,7 @@ public class UserControllerBack {
     //更新用户信息接口
     @PostMapping("/actionmall/mgr/user/updateuser.do")
     @ResponseBody
-    public HTTP updateUser(@RequestBody User user) {
+    public HTTP updateUserBack(@RequestBody User user) {
         if (userService.updateUser(user)) {
             return HTTP.SUCCESS("用户信息修改成功", user);
         } else {
@@ -33,7 +33,7 @@ public class UserControllerBack {
     //查找用户信息接口
     @PostMapping("/actionmall/mgr/user/finduser.do")
     @ResponseBody
-    public HTTP findUser(@RequestBody User user) {
+    public HTTP findUserBack(@RequestBody User user) {
         List<User> users = new LinkedList<>();
         users = userService.selectUser(user.getId());
         if (users.size() == 0) {
@@ -47,7 +47,7 @@ public class UserControllerBack {
     //删除用户接口
     @PostMapping("/actionmall/mgr/user/deleteusers.do")
     @ResponseBody
-    public HTTP deleteUser(@RequestBody User user) {
+    public HTTP deleteUserBack(@RequestBody User user) {
         if (!userService.deleteUser(user.getId())) {
             return HTTP.ERROR("用户存在订单无法删除");
         } else {
@@ -58,14 +58,14 @@ public class UserControllerBack {
     //查询用户列表接口
     @PostMapping("/actionmall/mgr/user/finduserlist.do")
     @ResponseBody
-    public HTTP findAllUser() {
+    public HTTP findAllUserBack() {
         return HTTP.SUCCESS(userService.getAllUser());
     }
 
     //后台管理用户登录接口
     @PostMapping("/actionmall/mgr/user/login.do")
     @ResponseBody
-    public HTTP login(@RequestBody User user, HttpSession session) {
+    public HTTP loginBack(@RequestBody User user, HttpSession session) {
         List<User> users = new LinkedList<>();
         users = userService.getUserByAccount(user.getAccount());
         if (users.size() == 0 || !users.get(0).getPassword().equals(user.getPassword())) {

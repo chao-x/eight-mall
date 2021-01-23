@@ -43,4 +43,30 @@ public class OrderController {
             return HTTP.ERROR(e.getMessage());
         }
     }
+
+    @PostMapping("/actionmall/order/cancelorder.do")
+    @ResponseBody
+    public HTTP cancelOrder(@RequestBody Order order){
+        if(orderService.cancelOrder(order.getOrderNo())!=0){
+            return HTTP.SUCCESS("该订单已取消！");
+        }
+        else return HTTP.ERROR("失败！");
+    }
+
+    @PostMapping("/actionmall/order/getlist.do")
+    @ResponseBody
+    public HTTP getList(@RequestBody int pageNo,int pageSize,int status,HttpSession session){
+        try{
+            User user=(User)session.getAttribute("user");
+            if(user==null){
+                return HTTP.ERROR("请登录后再进行操作！");
+            }
+            else {
+
+            }
+        }catch (RuntimeException e){
+            e.printStackTrace();
+            return HTTP.ERROR(e.getMessage());
+        }
+    }
 }

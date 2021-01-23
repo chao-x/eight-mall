@@ -66,4 +66,8 @@ public class OrderService {
         orderDetail.setDeliveryName(address.getName());
         return orderDetail;
     }
+
+    public int cancelOrder(long orderNo){
+        return ordersMapper.updateStatus(6,orderNo);
+    }
 }

@@ -36,7 +36,7 @@ public class ProductControllerBack {
         if((User)session.getAttribute("user")==null){
             return HTTP.ERROR("请先登录！",2);
         }
-        return HTTP.SUCCESS(productService.findProductsByID(products.getId()));
+        return HTTP.SUCCESS(productService.findProductsByProductID(products));
     }
 
     @PostMapping("/actionmall/mgr/product/setstatus.do")

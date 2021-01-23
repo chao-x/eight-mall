@@ -30,7 +30,7 @@ public class ProductController {
 
     @PostMapping("/actionmall/product/getdetail.do")
     @ResponseBody
-    public HTTP findHotProducts(@RequestBody Products products){
+    public HTTP getDetail(@RequestBody Products products){
         if (products.getId() == null){
             return HTTP.ERROR("产品已经下架");
         }

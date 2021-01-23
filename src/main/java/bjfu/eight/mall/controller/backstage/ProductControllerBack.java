@@ -19,7 +19,7 @@ public class ProductControllerBack {
 
     @PostMapping("/actionmall/mgr/product/productlist.do")
     @ResponseBody
-    public HTTP productList(@RequestBody Products products, HttpSession session) {
+    public HTTP productListBack(@RequestBody Products products, HttpSession session) {
         if((User)session.getAttribute("user")==null){
             return HTTP.ERROR("请先登录！",2);
         }
@@ -32,7 +32,7 @@ public class ProductControllerBack {
 
     @PostMapping("/actionmall/mgr/product/getdetail.do")
     @ResponseBody
-    public HTTP getDetail(@RequestBody Products products, HttpSession session) {
+    public HTTP getDetailBack(@RequestBody Products products, HttpSession session) {
         if((User)session.getAttribute("user")==null){
             return HTTP.ERROR("请先登录！",2);
         }
@@ -41,7 +41,7 @@ public class ProductControllerBack {
 
     @PostMapping("/actionmall/mgr/product/setstatus.do")
     @ResponseBody
-    public HTTP setStatus(@RequestBody Products products, HttpSession session) {
+    public HTTP setStatusBack(@RequestBody Products products, HttpSession session) {
         if((User)session.getAttribute("user")==null){
             return HTTP.ERROR("请先登录！",2);
         }
@@ -54,7 +54,7 @@ public class ProductControllerBack {
 
     @PostMapping("/actionmall/mgr/product/saveproduct.do")
     @ResponseBody
-    public HTTP saveProduct(@RequestBody Products products, HttpSession session) {
+    public HTTP saveProductBack(@RequestBody Products products, HttpSession session) {
         if((User)session.getAttribute("user")==null){
             return HTTP.ERROR("请先登录！",2);
         }

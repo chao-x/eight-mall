@@ -9,7 +9,7 @@ import java.util.List;
 @Mapper
 @Repository
 public interface UsersMapper {
-    @Insert("insert into action_users(account,password,email,phone,question,asw,role) value(#{account},#{password},#{email},#{phone},#{question},#{asw},0)")
+    @Insert("insert into action_users(account,password,email,phone,question,asw,role) values(#{account},#{password},#{email},#{phone},#{question},#{asw},0)")
     public Integer insertUser(User user);
 
     @Update("update action_users set del = 1 where id = #{id}")

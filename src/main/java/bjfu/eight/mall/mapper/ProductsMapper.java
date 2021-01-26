@@ -19,6 +19,9 @@ public interface ProductsMapper {
     @Select("select * from action_products where product_id = #{id}")
     List<Products> findProductByProductID(int id);
 
+    @Select("select * from action_products where parts_id=#{id}")
+    List<Products> findProductByPartsId(int id);
+
     @Select("select * from action_products where product_id = #{productId}")
     List<Products> findProductByProduct_ID(Products products);
 
@@ -30,6 +33,9 @@ public interface ProductsMapper {
 
     @Select("select * from action_products where id = #{id}")
     List<Products> findProductsByIDAll(int id);
+
+    @Select("select * from action_products where id = #{id}")
+    Products getProductById(int id);
 
     @Select("select * from action_products")
     List<Products> findProductsAll();

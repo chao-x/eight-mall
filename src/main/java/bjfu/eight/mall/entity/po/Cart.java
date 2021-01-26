@@ -6,18 +6,13 @@ import java.util.Date;
 
 public class Cart {
     private int id;
-    private int uid;
-    private int orderId;
-    private int goodsId;
-    private String goodsName;
-    private String iconUrl;
-    private double price;
+    private int userId;
+    private int productId;
     private int quantity;
-    private double totalPeice;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
-    private Date created;
+    private Date createTime;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
-    private Date updated;
+    private Date updateTime;
 
     public int getId() {
         return id;
@@ -27,52 +22,20 @@ public class Cart {
         this.id = id;
     }
 
-    public int getUid() {
-        return uid;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUid(int uid) {
-        this.uid = uid;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public int getOrderId() {
-        return orderId;
+    public int getProductId() {
+        return productId;
     }
 
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
-    }
-
-    public int getGoodsId() {
-        return goodsId;
-    }
-
-    public void setGoodsId(int goodsId) {
-        this.goodsId = goodsId;
-    }
-
-    public String getGoodsName() {
-        return goodsName;
-    }
-
-    public void setGoodsName(String goodsName) {
-        this.goodsName = goodsName;
-    }
-
-    public String getIconUrl() {
-        return iconUrl;
-    }
-
-    public void setIconUrl(String iconUrl) {
-        this.iconUrl = iconUrl;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
     public int getQuantity() {
@@ -83,27 +46,19 @@ public class Cart {
         this.quantity = quantity;
     }
 
-    public double getTotalPeice() {
-        return totalPeice;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setTotalPeice(double totalPeice) {
-        this.totalPeice = totalPeice;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
-    public Date getCreated() {
-        return created;
+    public Date getUpdateTime() {
+        return updateTime;
     }
 
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
-    public Date getUpdated() {
-        return updated;
-    }
-
-    public void setUpdated(Date updated) {
-        this.updated = updated;
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }

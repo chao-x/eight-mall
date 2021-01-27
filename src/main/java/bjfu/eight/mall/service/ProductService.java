@@ -2,6 +2,7 @@ package bjfu.eight.mall.service;
 
 import bjfu.eight.mall.entity.po.Products;
 import bjfu.eight.mall.entity.vo.FindProducts;
+import bjfu.eight.mall.entity.vo.FindProducts2;
 import bjfu.eight.mall.entity.vo.Floors;
 import bjfu.eight.mall.mapper.ProductsMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,10 +65,13 @@ public class ProductService {
 
     }
 
-    public List<Products> findProducts(FindProducts findProducts) {
-        findProducts.setPageNum((findProducts.getPageNum() - 1) * findProducts.getPageSize());
-        findProducts.setTotalRecord(productsMapper.countfindProductsBySort(findProducts));
-        return productsMapper.findProductsBySort(findProducts);
+    public FindProducts2 findProducts(FindProducts findProducts) {
+        FindProducts2 findProducts2=new FindProducts2();
+        findProducts2.setPageNum((findProducts.getPageNum() - 1) * findProducts.getPageSize());
+        findProducts2.setTotalRecord(productsMapper.countfindProductsBySort(findProducts));
+        findProducts2.setData(productsMapper.findProductsBySort(findProducts));
+        findProducts2.setPageSize(findProducts.getPageSize());
+        return findProducts2;
     }
 
     public boolean updateProduct(Products products) {

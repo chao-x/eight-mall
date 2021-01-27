@@ -47,13 +47,6 @@ public class FindProducts {
     int pageNum;
     int pageSize;
     String name;
-    int totalRecord;
 
-    public int getTotalRecord() {
-        return totalRecord;
-    }
 
-    public void setTotalRecord(int totalRecord) {
-        this.totalRecord = totalRecord;
-    }
 }

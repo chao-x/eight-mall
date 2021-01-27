@@ -66,6 +66,7 @@ public class ProductService {
 
     public List<Products> findProducts(FindProducts findProducts) {
         findProducts.setPageNum((findProducts.getPageNum() - 1) * findProducts.getPageSize());
+        findProducts.setTotalRecord(productsMapper.countfindProductsBySort(findProducts));
         return productsMapper.findProductsBySort(findProducts);
     }
 

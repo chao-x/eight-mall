@@ -40,8 +40,11 @@ public interface ProductsMapper {
     @Select("select * from action_products")
     List<Products> findProductsAll();
 
-    @Select("select * from action_products where name like '%${name}%' and product_id = #{productTypeId} and parts_id = #{partsId} and status <> 3 limit #{pageNum} , #{pageSize}")
+    @Select("select * from action_products where name like '%${name}%' or product_id = #{productTypeId} or parts_id = #{partsId} and status <> 3 limit #{pageNum} , #{pageSize}")
     List<Products> findProductsBySort(FindProducts findProducts);
+
+    @Select("select * from action_products where name like '%${name}%' or product_id = #{productTypeId} or parts_id = #{partsId} and status <> 3 limit #{pageNum} , #{pageSize}")
+    int countfindProductsBySort(FindProducts findProducts);
 
     @Update("update action_products set status=#{status},is_hot=#{isHot} where id=#{id}")
     Integer updateById(Products products);

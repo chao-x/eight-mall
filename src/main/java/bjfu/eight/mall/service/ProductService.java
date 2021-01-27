@@ -70,7 +70,7 @@ public class ProductService {
         findProducts2.setPageNum(findProducts.getPageNum());
         findProducts.setPageNum((findProducts.getPageNum() - 1) * findProducts.getPageSize());
         findProducts2.setData(productsMapper.findProductsBySort(findProducts));
-        findProducts2.setTotalRecord(findProducts2.getData().size());
+        findProducts2.setTotalRecord(productsMapper.countfindProductsBySort(findProducts));
         findProducts2.setPageSize(findProducts.getPageSize());
         return findProducts2;
     }

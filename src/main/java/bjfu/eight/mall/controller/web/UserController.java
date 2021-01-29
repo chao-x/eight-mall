@@ -66,11 +66,8 @@ public class UserController {
 
     @PostMapping("/actionmall/user/resetpassword.do")
     @ResponseBody
-    public HTTP updatePassword2(@RequestBody Password password, HttpSession session) {
-        if ((User) session.getAttribute("user") == null) {
-            return HTTP.ERROR("请先登录！");
-        }
-        if (userService.updatePassword2(password.getNewpwd(), ((User) session.getAttribute("user")).getId())) {
+    public HTTP updatePassword2(@RequestBody Password password) {
+        if (userService.updatePassword2(password.getNewpwd(), password.getUserId())) {
             return HTTP.SUCCESS("密码修改成功！");
         } else {
             return HTTP.SUCCESS("密码修改失败，请确认旧密码是否正确！");

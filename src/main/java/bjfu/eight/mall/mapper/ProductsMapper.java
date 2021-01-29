@@ -43,8 +43,14 @@ public interface ProductsMapper {
     @Select("select * from action_products where name like '%${name}%' or product_id = #{productTypeId} or parts_id = #{partsId} and status <> 3 limit #{pageNum} , #{pageSize}")
     List<Products> findProductsBySort(FindProducts findProducts);
 
+    @Select("select * from action_products where name like '%${name}%' and product_id = #{productTypeId} or parts_id = #{partsId} and status <> 3 limit #{pageNum} , #{pageSize}")
+    List<Products> findProductsBySort2(FindProducts findProducts);
+
     @Select("select COUNT(*) from action_products where name like '%${name}%' or product_id = #{productTypeId} or parts_id = #{partsId} and status <> 3")
     int countfindProductsBySort(FindProducts findProducts);
+
+    @Select("select COUNT(*) from action_products where name like '%${name}%' and product_id = #{productTypeId} or parts_id = #{partsId} and status <> 3")
+    int countfindProductsBySort2(FindProducts findProducts);
 
     @Update("update action_products set status=#{status},is_hot=#{isHot} where id=#{id}")
     Integer updateById(Products products);

@@ -69,8 +69,16 @@ public class ProductService {
         FindProducts2 findProducts2=new FindProducts2();
         findProducts2.setPageNum(findProducts.getPageNum());
         findProducts.setPageNum((findProducts.getPageNum() - 1) * findProducts.getPageSize());
-        findProducts2.setData(productsMapper.findProductsBySort(findProducts));
-        findProducts2.setTotalRecord(productsMapper.countfindProductsBySort(findProducts));
+        if(!findProducts.getName().equals("")&&findProducts.getProductTypeId()!=0)
+        {
+            findProducts2.setData(productsMapper.findProductsBySort2(findProducts));
+            findProducts2.setTotalRecord(productsMapper.countfindProductsBySort2(findProducts));
+        }
+        else
+        {
+            findProducts2.setData(productsMapper.findProductsBySort(findProducts));
+            findProducts2.setTotalRecord(productsMapper.countfindProductsBySort(findProducts));
+        }
         findProducts2.setPageSize(findProducts.getPageSize());
         return findProducts2;
     }

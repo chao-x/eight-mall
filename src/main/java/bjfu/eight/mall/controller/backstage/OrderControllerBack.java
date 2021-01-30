@@ -40,7 +40,7 @@ public class OrderControllerBack {
 
     @PostMapping("/actionmall/mgr/order/findorders_nopages.do")
     @ResponseBody
-    public HTTP findOrders(@RequestBody HttpSession session){
+    public HTTP findOrders(HttpSession session){
         try {
             User user=(User)session.getAttribute("user");
             if(user==null){

@@ -30,7 +30,7 @@ public class OrderController {
 
     @PostMapping("/actionmall/order/getdetail.do")
     @ResponseBody
-    public HTTP getOrderDetail(@RequestBody HttpSession session,Order order){
+    public HTTP getOrderDetail(@RequestBody Order order,HttpSession session){
         try {
             User user=(User)session.getAttribute("user");
             if(user==null){

@@ -19,7 +19,7 @@ public class CartController {
 
     @PostMapping("/actionmall/cart/getcartcount.do")
     @ResponseBody
-    public HTTP getCartCount(@RequestBody HttpSession session){
+    public HTTP getCartCount(HttpSession session){
         try {
             User user=(User)session.getAttribute("user");
             if(user==null){
@@ -53,7 +53,7 @@ public class CartController {
 
     @PostMapping("/actionmall/cart/clearcarts.do")
     @ResponseBody
-    public HTTP clearCarts(@RequestBody HttpSession session){
+    public HTTP clearCarts(HttpSession session){
         try {
             User user=(User)session.getAttribute("user");
             if(user==null){
@@ -88,7 +88,7 @@ public class CartController {
 
     @PostMapping("/actionmall/cart/findallcarts.do")
     @ResponseBody
-    public HTTP findAllCarts(@RequestBody HttpSession session){
+    public HTTP findAllCarts(HttpSession session){
         try {
             User user=(User)session.getAttribute("user");
             if(user==null){

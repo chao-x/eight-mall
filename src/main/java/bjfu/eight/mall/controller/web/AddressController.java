@@ -43,7 +43,7 @@ public class AddressController {
 
     @PostMapping("/actionmall/addr/findaddrs.do")
     @ResponseBody
-    public HTTP findAddrs(@RequestBody HttpSession session){
+    public HTTP findAddrs(HttpSession session){
         try {
             User user=(User)session.getAttribute("user");
             if(user==null){

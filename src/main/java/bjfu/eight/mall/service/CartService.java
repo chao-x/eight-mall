@@ -115,6 +115,14 @@ public class CartService {
         Calendar cal = Calendar.getInstance();
         Date date = cal.getTime();
         cart.setCreateTime(date);
+        List<Cart> carts=cartsMapper.getByUid(uid);
+        for(Cart cart1:carts)
+        {
+            if(cart1.getProductId()==cart.getProductId()){
+                cartsMapper.updateCartAmount(cart1.getQuantity()+cart.getQuantity(),cart.getProductId());
+                return findAllCarts(uid);
+            }
+        }
         cartsMapper.insertCart(cart);
         return findAllCarts(uid);
     }

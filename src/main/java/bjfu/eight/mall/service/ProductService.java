@@ -69,7 +69,7 @@ public class ProductService {
         FindProducts2 findProducts2=new FindProducts2();
         findProducts2.setPageNum(findProducts.getPageNum());
         findProducts.setPageNum((findProducts.getPageNum() - 1) * findProducts.getPageSize());
-        if(!findProducts.getName().equals("")&&findProducts.getProductTypeId()!=0)
+        if(findProducts.getProductTypeId()!=0)
         {
             findProducts2.setData(productsMapper.findProductsBySort2(findProducts));
             findProducts2.setTotalRecord(productsMapper.countfindProductsBySort2(findProducts));

@@ -23,7 +23,12 @@ public class CartService {
     private ProductsMapper productsMapper;
 
     public int getCartCount(int uid){
-        return cartsMapper.countcartByUid(uid);
+        List<Cart> carts=cartsMapper.getByUid(uid);
+        int count=0;
+        for(Cart cart:carts){
+            count+=(cart.getQuantity());
+        }
+        return count;
     }
 
     public CartList updateCarts(int productid,int quantity,int uid){

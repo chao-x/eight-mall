@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品详情</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./element-ui/index.css">
+    <link rel="stylesheet" href="./css/commodity-detail.css">
+    <!-- 先引入 Vue -->
+    <script src="./js/vue.js"></script>
+    <!-- 引入组件库 -->
+    <script src="./element-ui/index.js"></script>
+    <!-- 引入 http-vue-loader -->
+    <script src="./js/httpVueLoader.js"></script>
+    <!-- 引入 axios -->
+    <script src="./js/axios.min.js"></script>
+    <!-- 引入distpicker -->
+    <script src="./js/v-distpicker.js"></script>
+    <!--通用js-->
+    <script src="./js/common.js"></script>
+    <style>
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <el-container>
+            <el-header>
+                <header-nav ref="headerNav"></header-nav>
+            </el-header>
+            <el-main>
+                <div style="width: 1200px;margin: 0 auto;">
+                    <!--导航-->
+                    <el-breadcrumb separator-class="el-icon-arrow-right">
+                        <el-breadcrumb-item><a href="index.html">首页</a></el-breadcrumb-item>
+                        <el-breadcrumb-item v-for="item,index in pathName" v-if="item">
+                            <a @click="popPath(index)">
+                                {{item.name}}
+                            </a>
+                        </el-breadcrumb-item>
+                        <!-- <el-breadcrumb-item>活动列表</el-breadcrumb-item>
+                        <el-breadcrumb-item>活动详情</el-breadcrumb-item> -->
+                    </el-breadcrumb>
+                    <!--内容-->
+                    <div class="cmdty-content">
+                        <!--大图-->
+                        <div class="cmdty-img">
+                            <img :src="SERVER_BASE_URL+iconUrl" alt="">
+                        </div>
+                        <!--小图切换-->
+                        <div class="cmdty-subImgs">
+                            <div v-for="(item,index) in subImages"
+                                :class="index == subImgCur?'cmdty-subImgs-item cmdty-subImgs-item-selected':'cmdty-subImgs-item'"
+                                @mouseover="onmouseover(index)" @mouseout="onmouseout" v-if="item != ''">
+                                <img :src="SERVER_BASE_URL+item" alt="">
+                            </div>
+                        </div>
+                        <!--详情-->
+                        <div class="cmdty-info" v-if="commodity">
+                            <!--配置详情-->
+                            <div class="cmdty-info-name cmdty-item">
+                                <h1>{{commodity.name}}</h1>
+                            </div>
+                            <div class="cmdty-info-price cmdty-item">
+                                <label class="cmdty-label">价格：</label>
+                                <span>¥{{commodity.price.toFixed(2)}}</span>
+                                <div>
+                                    <label class="cmdty-label">促销：</label>
+                                    <span style="font-size:12px;color:#3a3a3a;;">无</span>
+                                </div>
+                            </div>
+                            <div class=" cmdty-item">
+                                <label class="cmdty-label">发货地：</label>
+                                <span style="font-size: 12px;"> 湖南省常德市鼎城区</span>
+                                <label class="cmdty-label" style="margin-left: 20px;">配送方式：</label>
+                                <span>
+                                    <el-radio v-model="radio" label="1">到付</el-radio>
+                                    <el-radio v-model="radio" label="2">在线支付</el-radio>
+                                </span>
+                            </div>
+                            <div class="cmdty-info-delivery cmdty-item">
+                                <label class="cmdty-label">配送至：</label>
+                                <div>
+                                    <v-distpicker province="广东省" city="广州市" area="海珠区" @selected="onSelected">
+                                    </v-distpicker>
+                                </div>
+                            </div>
+                            <div class="cmdty-info-no cmdty-item">
+                                <label class="cmdty-label">商品编号：</label>
+                                <div>
+                                    {{commodity.id}}
+                                </div>
+                            </div>
+                            <!--购买信息-->
+                            <div class="cmdty-buy">
+                                <div class="cmdty-buy-num cmdty-item">
+                                    <label class="cmdty-label">数量：</label>
+                                    <el-input-number v-model="num" size="mini" :min="1" :max="commodity.stock"
+                                        label="选择一个数量">
+                                    </el-input-number>
+                                </div>
+                                <div class="cmdty-buy-method cmdty-item">
+                                    <label class="cmdty-label">购买方式：</label>
+                                    <div class="content-commodity-right-selected">全额支付</div>
+                                </div>
+                                <!-- <div class="cmdty-buy-num cmdty-item">
+                                    <label>选择颜色：</label>
+                                    <div></div>
+                                </div> -->
+                                <!--立即购买+加入购物车-->
+                                <div class="cmdty-buy-way">
+                                    <!-- <a class="addCart" @click="addToCart">加入购物车</a> -->
+                                    <a class="addCart">
+                                        <el-button type="text" @click="addToCart" style="color:#fff;font-size:16px;">
+                                            加入购物车
+                                        </el-button>
+                                    </a>
+                                    <a class="buy" @click="toSubmitOrder">立即下单</a>
+                                </div>
+                                <!--服务承诺-->
+                                <div class="cmdty-buy-pledges cmdty-item">
+                                    <label class="cmdty-label">
+                                        服务承诺：
+                                    </label>
+                                    <div>
+                                        <div>
+                                            <img src="./images/common/pledges_01.jpg" alt="">
+                                        </div>
+                                        <div>
+                                            <img src="./images/common/pledges_02.jpg" alt="">
+                                        </div>
+                                        <div>
+                                            <img src="./images/common/pledges_03.jpg" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--参数导航-->
+                    <div class="cmdty-tabs">
+                        <div v-for="(item,index) in tabs"
+                            :class="tabCur == index?'cmdty-tab cmdty-tab-selected':'cmdty-tab'"
+                            @click="switchTab(index)"> {{item}}
+                        </div>
+                    </div>
+                    <!--商品内容-->
+                    <div class="cmdty-content" v-if="commodity">
+                        <div v-if="tabCur == 0">
+                            <div v-html="commodity.detail"></div>
+                        </div>
+                        <div v-if="tabCur == 1">
+                            <div v-html="commodity.specParam"></div>
+                        </div>
+                        <div v-if="tabCur == 2">包装与售后</div>
+                        <div v-if="tabCur == 3">用户评价</div>
+                    </div>
+                </div>
+            </el-main>
+            <el-footer>
+                <footer-nav></footer-nav>
+            </el-footer>
+        </el-container>
+    </div>
+</body>
+<script>
+    // 使用httpVueLoader
+    Vue.use(httpVueLoader);
+    new Vue({
+        el: '#app',
+        data: {
+            address: {
+                province: "",
+                city: "",
+                county: ""
+            },
+            commodity: null,
+            current: 0,
+            tabs: ["产品详情", "规格参数", "包装售后", "用户评价"],
+            subImages: [],
+            iconUrl: "",
+            subImgCur: 0,
+            tabCur: 0,
+            num: 1,
+            radio: '2',
+            pathName: null
+        },
+        methods: {
+            //获取路径名
+            getPathName() {
+                let categories = JSON.parse(localStorage.getItem('categories'))
+                let id = this.commodity.productId,
+                    sub_sub_id = this.commodity.partsId,
+                    res = [undefined, undefined, undefined]
+                //console.log(categories)
+                for (let i in categories) {
+                    let c = categories[i]
+                    if (c.id == id) {
+                        res[0] = c
+                        for (let j in c.children) {
+                            let cc = c.children[j]
+                            if (cc.id == sub_sub_id) {
+                                res[1] = cc
+                                return res
+                            } else {
+                                for (let k in cc.children) {
+                                    let ck = cc.children[k]
+                                    //console.log(c,cc,ck)
+                                    if (ck.id == sub_sub_id) {
+                                        res[1] = cc
+                                        res[2] = ck
+                                        console.log(res)
+                                        return res
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                return res
+            },
+            popPath(index) {
+                let id = this.pathName[0] != undefined ? this.pathName[0].id : 0,
+                    sub_id = this.pathName[1] != undefined ? this.pathName[1].id : 0,
+                    sub_sub_id = this.pathName[2] != undefined ? this.pathName[2].id : 0
+                switch (index) {
+                    case 0: {
+                        sub_id = 0
+                        sub_sub_id = 0
+                        break;
+                    }
+                    case 1: {
+                        sub_sub_id = 0
+                        break;
+                    }
+                    case 2: {
+                        break;
+                    }
+                }
+                const params = new URLSearchParams()
+                params.append('id', id)
+                params.append('sub_id', sub_id)
+                params.append('sub_sub_id', sub_sub_id)
+                window.location.href = 'commodity-search.html?' + params
+            },
+            //
+            switchTab(index) {
+                this.tabCur = index
+            },
+            //移到图片上
+            onmouseover(index) {
+                this.subImgCur = index
+                this.iconUrl = this.subImages[index]
+            },
+            //移出图片
+            onmouseout() {},
+            //省市区选择器
+            onSelected(data) {
+                this.address.province = data.province.value
+                this.address.city = data.city.value
+                this.address.county = data.area.value
+                console.log(this.address)
+            },
+            //获取商品详情
+            getProductDetail(productId) {
+                const data = {
+                    'id': Number(productId)
+                };
+                axios.post(SERVER_BASE_URL + '/actionmall/product/getdetail.do', data).then(res => {
+                    console.log(res.data)
+                    if (res.data.status == 0) {
+                        this.commodity = res.data.data[0]
+                        this.pathName = this.getPathName()
+                        this.iconUrl = this.commodity.iconUrl
+                        //封面
+                        this.subImages[0] = this.iconUrl
+                        if (this.commodity.subImages != '' || this.commodity.subImages != null) {
+                            let sub = this.commodity.subImages.split(';')
+                            // if(sub.length)
+                            //console.log(sub)
+                            //其余
+                            this.subImages = this.subImages.concat(sub)
+                        }
+
+                    } else {
+                        this.$message(res.data.msg)
+                    }
+                }, err => {})
+            },
+            //立即下单
+            toSubmitOrder() {
+                let user = JSON.parse(localStorage.getItem('user'))
+                if (user != null) {
+                    const cartItem = {
+                        'userId': user.id,
+                        'productId': this.commodity.id,
+                        'name': this.commodity.name,
+                        'iconUrl': this.commodity.iconUrl,
+                        'price': this.commodity.price,
+                        'stock': this.commodity.stock,
+                        'quantity': this.num,
+                        'checked': true
+                    }
+                    let confirmItems = []
+                    confirmItems.push(cartItem)
+                    //缓存确认的商品
+                    localStorage.setItem('confirmItems', JSON.stringify(confirmItems))
+                    const params = new URLSearchParams()
+                    params.append('from', 'cmdty-detail')
+                    window.location.href = "confirm-order.html?" + params
+                } else {
+                    const params = new URLSearchParams()
+                    params.append('from', 'cmdty-detail')
+                    params.append('id', this.commodity.id)
+                    window.location.href = "login.html?" + params
+                }
+            },
+            //加入购物车
+            addToCart() {
+                /**
+                 * 判断用户是否登录，若未登录，则写入localStorage,等待登录后发送请求写入数据库
+                 * 登录则发送请求写入数据库
+                 * */
+                let user = JSON.parse(localStorage.getItem("user"))
+                console.log("user", user)
+                if (user != null) {
+                    let name = this.commodity.name
+                    const data = {
+                        'userId': user.id,
+                        'productId': this.commodity.id,
+                        'quantity': this.num
+                    }
+                    axios.post(SERVER_BASE_URL + '/actionmall/cart/savecart.do', data).then(res => {
+                        console.log(res.data)
+                        if (res.data.status == 0) {
+                            //刷新购物车数量
+                            this.$refs.headerNav.getCartCount()
+                            //唤起对话框
+                            this.$confirm('', name + '    成功加入购物车！', {
+                                confirmButtonText: '去结算',
+                                cancelButtonText: '再逛逛',
+                                type: 'success',
+                                center: true
+                            }).then(() => {
+                                // this.$message({
+                                //     type: 'success',
+                                //     message: '成功!'
+                                // });
+                                let tempWindow = window.open("_blank");
+                                tempWindow.location = "cart.html"
+                            }).catch(() => {
+                                // this.$message({
+                                //     type: 'info',
+                                //     message: '取消'
+                                // });
+                            });
+
+                        } else {
+                            this.$message(res.data.msg)
+                        }
+                    }, err => {})
+                } else {
+                    const cartItem = {
+                        'userId': null,
+                        'productId': this.commodity.id,
+                        'name': this.commodity.name,
+                        'iconUrl': this.commodity.iconUrl,
+                        'price': this.commodity.price,
+                        'stock': this.commodity.stock,
+                        'quantity': this.num,
+                        'checked': true
+                    }
+                    //localStorage.removeItem('cartItems')
+                    let cartItems = JSON.parse(localStorage.getItem('cartItems'))
+                    if (cartItems != null) {
+                        //若重复加入商品则更新数量
+                        let repeat = false
+                        for (var i = 0; i < cartItems.length; i++) {
+                            if (cartItems[i].productId == cartItem.productId) {
+                                cartItems[i].quantity += cartItem.quantity
+                                repeat = true
+                                break;
+                            }
+                        }
+                        //不是重复商品
+                        if (!repeat) {
+                            cartItems.push(cartItem)
+                        }
+                    } else {
+                        cartItems = []
+                        cartItems.push(cartItem)
+                    }
+                    console.log("cartItems", cartItems)
+                    //console.log(cartItems)
+                    localStorage.setItem('cartItems', JSON.stringify(cartItems))
+                    //刷新购物车数量
+                    this.$refs.headerNav.getCartCount()
+                    //唤起对话框
+                    this.$confirm('', name + '    成功加入购物车！', {
+                        confirmButtonText: '去结算',
+                        cancelButtonText: '再逛逛',
+                        type: 'success',
+                        center: true
+                    }).then(() => {
+                        // this.$message({
+                        //     type: 'success',
+                        //     message: '成功!'
+                        // });
+                        let tempWindow = window.open("_blank");
+                        tempWindow.location = "cart.html"
+                    }).catch(() => {
+                        // this.$message({
+                        //     type: 'info',
+                        //     message: '取消'
+                        // });
+                    });
+
+                }
+            }
+        },
+        created() {
+            //获取商品ID
+            let id = getSearch(window.location.href, 'id')
+            this.getProductDetail(id)
+        },
+        components: {
+            // 将组建加入组建库
+            'header-nav': 'url:./components/header-nav.vue',
+            // 'header-search': 'url:./components/header-search.vue',
+            'footer-nav': 'url:./components/footer-nav.vue',
+            VDistpicker
+        }
+    })
+</script>
+
+</html>

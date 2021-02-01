@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.util.LinkedList;
 import java.util.List;
 
+@CrossOrigin
 @Controller
 public class UserController {
     @Autowired

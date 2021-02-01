@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <title>我的购物车</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./element-ui/index.css">
+    <link rel="stylesheet" href="./css/cart.css">
+    <!-- 先引入 Vue -->
+    <script src="./js/vue.js"></script>
+    <!-- 引入组件库 -->
+    <script src="./element-ui/index.js"></script>
+    <!-- 引入 http-vue-loader -->
+    <script src="./js/httpVueLoader.js"></script>
+    <!-- 引入 axios -->
+    <script src="./js/axios.min.js"></script>
+    <!--通用js-->
+    <script src="./js/common.js"></script>
+</head>
+
+<body>
+    <div id="app" style="background-color: #f5f5f5;">
+        <el-container>
+            <el-header>
+                <header-nav :show-cart="false"></header-nav>
+            </el-header>
+            <el-container style="width:100%;background-color: #ffffff;">
+                <header-steps :active="0"></header-steps>
+            </el-container>
+            <el-main>
+                <div style="width:1200px;margin: 0 auto;">
+                    <!--没有商品时-->
+                    <div class="empty" v-if="commodities == null|| commodities.length==0">
+                        <img src="https://res.vmallres.com/20210112/staticpc/img/icon-header-minicart.32e5f81.png">
+                        <p>您的购物车里什么也没有哦~</p>
+                        <a href="index.html">去逛逛</a>
+                    </div>
+                    <!--有商品时-->
+                    <div v-else>
+                        <div class="cart-cmdty-title">
+                            <div>
+                                <el-checkbox v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
+                            </div>
+                            <ul>
+                                <li>商品</li>
+                                <li>单价</li>
+                                <li>数量</li>
+                                <li>小计</li>
+                                <li>操作</li>
+                            </ul>
+                        </div>
+                        <el-form>
+                            <el-form-item label="" class="form-item" v-for="item,index in commodities">
+                                <div class="form-item-check">
+                                    <el-checkbox v-model="item.checked" @change="handleCheckChange(item)"></el-checkbox>
+                                </div>
+                                <div class="form-item-info">
+                                    <div class="form-item-img">
+                                        <a @click="toCommodityDetail(item.productId)">
+                                            <img :src="SERVER_BASE_URL+item.iconUrl" alt="">
+                                        </a></div>
+                                    <div class="form-item-msg">
+                                        <a @click="toCommodityDetail(item.productId)">
+                                            <p>{{item.name}}</p>
+                                            <!-- <p>陶瓷白 有线充版</p> -->
+                                        </a>
+                                    </div>
+                                    <div class="form-item-price" v-if="item.price">¥{{item.price.toFixed(2)}}</div>
+                                    <div class="form-item-num">
+                                        <el-input-number v-model="item.quantity" :min="1" :max="item.stock"
+                                            @change="handleChange(item)">
+                                        </el-input-number>
+                                    </div>
+                                    <div class="form-item-count" v-if="item.price && item.quantity">¥
+                                        {{(item.price*item.quantity).toFixed(2)}}
+                                    </div>
+                                    <div class="form-item-del">
+                                        <a @click="deleteItem(index)">删除</a>
+                                    </div>
+                                </div>
+                            </el-form-item>
+                        </el-form>
+                        <div class="cmdty-total">
+                            <div class="cmdty-total-check">
+                                <el-checkbox v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
+                                <a @click="deleteItems">删除</a>
+                            </div>
+                            <div class="cmdty-total-result">
+                                <div>
+                                    <p>
+                                        <label>总计： </label>
+                                        <span>¥{{sum.totalPrice.toFixed(2)}}</span>
+                                    </p>
+                                    <div>
+                                        <span>已选<em>{{sum.count}}</em>件商品</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <a @click="toConfirmOrder">立即结算</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </el-main>
+            <el-footer>
+                <footer-nav></footer-nav>
+            </el-footer>
+        </el-container>
+    </div>
+</body>
+
+<script>
+    // 使用httpVueLoader
+    Vue.use(httpVueLoader);
+    new Vue({
+        el: '#app',
+        data: {
+            num: 0,
+            commodities: null,
+            totalPrice: 0
+        },
+        methods: {
+            //全选
+            handleCheckAllChange(val) {
+                //console.log(val)
+                for (var i in this.commodities) {
+                    this.$set(this.commodities[i], 'checked', val)
+                }
+            },
+            //缓存选择状态(仅localstorage)
+            handleCheckChange(item) {
+                //console.log(item)
+                //获取缓存的cartItems
+                let cartItems = JSON.parse(localStorage.getItem('cartItems'))
+                //更新
+                for (var i in cartItems) {
+                    if (cartItems[i].productId == item.productId) {
+                        cartItems[i].checked = item.checked
+                    }
+                }
+                //重新缓存
+                localStorage.setItem('cartItems', JSON.stringify(cartItems))
+            },
+            //更新数量
+            handleChange(item) {
+                console.log(item)
+                //获取缓存的user
+                let user = JSON.parse(localStorage.getItem('user'))
+                //console.log("-user", user)
+                if (user != null) {
+                    //发送更新请求
+                    const data = {
+                        'userId': item.userId,
+                        'productId': item.productId,
+                        'quantity': item.quantity
+                    }
+                    axios.post(SERVER_BASE_URL +
+                        '/actionmall/cart/updatecarts.do', data).then(
+                        res => {
+                            console.log('update-cart-item', res.data)
+                            if (res.data.status == 0) {
+                                console.log(res.data.data.lists)
+                            } else {
+                                console.log(this.$message(res.data.msg))
+                            }
+                        }, err => {})
+                } else {
+                    //获取缓存的cartItems
+                    let cartItems = JSON.parse(localStorage.getItem('cartItems'))
+                    //更新
+                    for (var i in cartItems) {
+                        if (cartItems[i].productId == item.productId) {
+                            cartItems[i].quantity = item.quantity
+                        }
+                    }
+                    //重新缓存
+                    localStorage.setItem('cartItems', JSON.stringify(cartItems))
+                }
+            },
+            //去详情页
+            toCommodityDetail(id) {
+                let tempWindow = window.open("_blank")
+                const params = new URLSearchParams()
+                params.append('id', id)
+                console.log(params.toString())
+                tempWindow.location.href = 'commodity-detail.html?' + params
+            },
+            //获取购物车数据
+            getCartData(callback) {
+                //根据用户是否登录获取缓存或请求后端数据
+                //获取缓存的user
+                let user = JSON.parse(localStorage.getItem('user'))
+                console.log("cart-user", user)
+                //获取缓存的cartItems
+                let cartItems = JSON.parse(localStorage.getItem('cartItems'))
+                if (user != null) {
+                    //获取已保存在数据库的购物车数据
+                    axios.post(SERVER_BASE_URL + '/actionmall/cart/findallcarts.do').then(res => {
+                        console.log('cart', res.data)
+                        if (res.data.status == 0) {
+                            this.commodities = res.data.data.lists
+                            //this.totalPrice = res.data.data.totalPrice
+                            //合并数据库数据和session数据
+                            for (var j in cartItems) {
+                                let repeat = false
+                                for (var i in this.commodities) {
+                                    //重复，更新
+                                    if (cartItems[j].productId == this.commodities[i]
+                                        .productId) {
+                                        repeat = true
+                                        this.commodities[i].quantity += cartItems[j].quantity
+                                        //发送更新请求
+                                        const data = {
+                                            'userId': user.id,
+                                            'productId': this.commodities[i].productId,
+                                            'quantity': this.commodities[i].quantity
+                                        }
+                                        axios.post(SERVER_BASE_URL +
+                                            '/actionmall/cart/updatecarts.do', data).then(
+                                            resU => {
+                                                console.log('update-cart', resU.data)
+                                                if (resU.data.status == 0) {
+                                                    cartItems.splice(j, 1)
+                                                } else {
+                                                    console.log(this.$message(resU.data.msg))
+                                                }
+                                            }, errU => {})
+                                        break;
+                                    }
+                                }
+                                //不重复，合并
+                                if (!repeat) {
+                                    //发送新增请求
+                                    const data = {
+                                        'userId': user.id,
+                                        'productId': cartItems[j].productId,
+                                        'quantity': cartItems[j].quantity
+                                    }
+                                    axios.post(SERVER_BASE_URL + '/actionmall/cart/savecart.do',
+                                        data).then(resI => {
+                                        console.log('save-cart', resI.data)
+                                        if (resI.data.status == 0) {
+                                            cartItems.splice(j, 1)
+                                        } else {
+                                            console.log(this.$message(resI.data.msg))
+                                        }
+                                    }, errI => {})
+                                    this.commodities.push(cartItems[j])
+                                }
+                            }
+                            //删除购物车缓存
+                            localStorage.removeItem('cartItems')
+                            console.log('cart-commodities', this.commodities)
+                            callback(this.commodities)
+                        } else {
+                            this.$message(res.data.msg)
+                        }
+                    }, err => {})
+                } else {
+                    console.log("cart-cartItems", cartItems)
+                    this.commodities = cartItems
+                    callback(this.commodities)
+                }
+            },
+            /**
+             * 若登录删除时，发起请求，若未登录，删除localstorage，重新缓存
+             * */
+            //删除单项
+            deleteItem(index) {
+                this.$confirm('', '您确定要删除该商品？', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning',
+                    center: true
+                }).then(() => {
+                    // this.$message({
+                    //     type: 'success',
+                    //     message: '删除成功!'
+                    // });
+                    //获取用户信息
+                    let user = JSON.parse(localStorage.getItem('user'))
+                    console.log("cart-del-user", user)
+                    //已登录
+                    if (user != null) {
+                        const data = {
+                            'userId': this.commodities[index].userId,
+                            'productId': this.commodities[index].productId
+                        }
+                        //console.log('cart-del-post', data)
+                        axios.post(SERVER_BASE_URL + '/actionmall/cart/delcarts.do', data).then(
+                            res => {
+                                if (res.data.status == 0) {
+                                    console.log('delcarts.do', res.data.data)
+                                    //删除
+                                    this.commodities.splice(index, 1)
+                                } else {
+                                    this.$message(res.data.msg)
+                                }
+                            }, err => {})
+                    } else {
+                        //未登录
+                        //删除
+                        this.commodities.splice(index, 1)
+                        //重新缓存
+                        let cartItems = JSON.parse(localStorage.getItem('cartItems'))
+                        cartItems = this.commodities
+                        localStorage.setItem('cartItems', JSON.stringify(cartItems))
+                    }
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
+            },
+            //删除选中的多项
+            async postAll() {
+                for (let i = 0; i < this.commodities.length;) {
+                    if (this.commodities[i].checked) {
+                        const data = {
+                            'userId': this.commodities[i].userId,
+                            'productId': this.commodities[i].productId
+                        }
+                        //等待删除请求完成后，进行下一次
+                        let res = await this.postAllEach(data, i)
+                        console.log('postEach', res)
+                    } else {
+                        i++
+                    }
+                }
+            },
+            //删除指定项的请求
+            postAllEach(data, i) {
+                let that = this
+                return new Promise((resolve, reject) => {
+                    axios.post(SERVER_BASE_URL + '/actionmall/cart/delcarts.do',
+                        data).then(res => {
+                        resolve(res)
+                        if (res.data.status == 0) {
+                            //更新视图
+                            that.commodities.splice(i, 1)
+                        } else {
+                            reject(res.data.msg)
+                            this.$message(res.data.msg)
+                        }
+                    }, err => {
+                        reject(err)
+                    })
+                })
+            },
+            //删除勾选的项目
+            deleteItems() {
+                this.$confirm('', '您确定要删除勾选商品？', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning',
+                    center: true
+                }).then(() => {
+                    // this.$message({
+                    //     type: 'success',
+                    //     message: '删除成功!'
+                    // });
+                    //获取用户信息
+                    let user = JSON.parse(localStorage.getItem('user'))
+                    console.log("cart-del-user", user)
+                    //已登录
+                    if (user != null) {
+                        //删除选中项
+                        this.postAll()
+                    } else {
+                        //未登录
+                        //删除
+                        for (let i = 0; i < this.commodities.length;) {
+                            console.log(i, this.commodities[i])
+                            //勾选项目
+                            if (this.commodities[i].checked) {
+                                this.commodities.splice(i, 1)
+                            } else {
+                                i++
+                            }
+                        }
+                        //重新缓存
+                        let cartItems = JSON.parse(localStorage.getItem('cartItems'))
+                        cartItems = this.commodities
+                        localStorage.setItem('cartItems', JSON.stringify(cartItems))
+                    }
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
+            },
+            //去结算
+            toConfirmOrder() {
+                let confirmItems = []
+                for (var i in this.commodities) {
+                    var c = this.commodities[i]
+                    if (c.checked) {
+                        confirmItems.push(c)
+                    }
+                }
+                //缓存确认的商品
+                localStorage.setItem('confirmItems', JSON.stringify(confirmItems))
+                let user = JSON.parse(localStorage.getItem('user'))
+                if (user != null) {
+                    window.location.href = "confirm-order.html"
+                } else {
+                    const params = new URLSearchParams()
+                    params.append('from', 'cart')
+                    window.location.href = "login.html?" + params
+                }
+            }
+        },
+        computed: {
+            //计算选中商品数目及总价
+            sum() {
+                let count = 0,
+                    totalPrice = 0;
+                for (var i in this.commodities) {
+                    var c = this.commodities[i]
+                    if (c != undefined && c.checked) {
+                        //console.log(c)
+                        count += c.quantity
+                        totalPrice += c.price * c.quantity
+                    }
+                }
+                return {
+                    count: count,
+                    totalPrice: totalPrice
+                }
+            },
+            //监测全选
+            checkAll() {
+                var all = true
+                for (var i in this.commodities) {
+                    var c = this.commodities[i]
+                    if (!c.checked) {
+                        all = false
+                        break
+                    }
+                }
+                return all
+            }
+        },
+        created() {
+            //获取购物车数据
+            let that = this
+            this.getCartData(function (data) {
+                //默认全选
+                that.handleCheckAllChange(true)
+            })
+        },
+        components: {
+            // 将组建加入组建库
+            'header-nav': 'url:./components/header-nav.vue',
+            'header-steps': 'url:./components/header-steps.vue',
+            'footer-nav': 'url:./components/footer-nav.vue'
+        }
+    })
+</script>
+
+</html>

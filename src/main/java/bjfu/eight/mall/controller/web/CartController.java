@@ -6,12 +6,14 @@ import bjfu.eight.mall.entity.po.*;
 import bjfu.eight.mall.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 
+@CrossOrigin
 @Controller
 public class CartController {
     @Autowired

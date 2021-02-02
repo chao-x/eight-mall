@@ -1,0 +1,41 @@
+.split_line{
+    float: left;
+    width: 1px;
+    height: 20px;
+    display: inline-block;
+    vertical-align: middle;
+    background: rgba(0,0,0,0.2);
+    margin: 15px 16px;
+}
+.login_header{
+    background: rgba(0,0,0,0.05);
+    height: 50px;
+}
+.mainlogo{
+    display: inline-block;
+    float: left;
+    height: 19.2px;
+    margin-top: 12px;
+}
+.websiteName{
+    display: inline-block;
+    float: left;
+    height: 50pxpx;
+}
+.HeadTitle{
+    display: inline-block;
+    float: left;
+    font-size: 15.8px;
+    margin: 14.5px 0px;
+    font-family: Microsoft Yahei,STHeiti,Simsun,STSong,sans-serif;
+    font-weight: 700;
+}
+.header_center{
+    width: auto;
+    max-width: 1260px;
+    height: 100%;
+    margin: 0 auto;
+    border: 0;
+    position: relative;
+    font-size: 0;
+}

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>用户中心</title>
+    <script src="js/vue.js"></script>
+    <script src="js/axios.min.js"></script>
+    <script src="element-ui/index.js"></script>
+    <script src="component/header_login/header_login.js"></script>
+    <script src="component/header_login/footer_login.js"></script>
+    <link rel="stylesheet" type="text/css" href="element-ui/index.css">
+    <link rel="stylesheet" type="text/css" href="component/header_login/header_login.css">
+    <link rel="stylesheet" type="text/css" href="component/header_login/footer_login.css">
+    <link rel="stylesheet" type="text/css" href="css/userCenter.css">
+</head>
+<body style="height: 100%;padding: 0px;margin: 0">
+<div id="app" style="height: 100%;padding: 0px;margin: 0">
+    <header_login></header_login>
+    <div style="min-height: 700px;height: calc(100% - 155px);background: #fff;">
+        <div class="register_main_container">
+            <div class="register_main">
+                <div class="register_main_left_tab">
+                    <div class="register_main_tabItem" :class="{tab_selected: isInfo==true}" v-on:click="onUserInfoChange">
+                        <div class="register_main_text_container" >
+                            <i class="register_icon register_phoneIcon"></i>
+                            <span class="text_container"><span>个人信息</span></span>
+                        </div>
+                    </div>
+                    <div class="register_main_tabItem" :class="{tab_selected: isInfo==false}" v-on:click="onUserSecChange">
+                        <div class="register_main_text_container" >
+                            <i class="register_icon register_emailIcon"></i>
+                            <span class="text_container"><span>账号与安全</span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="register_main_content">
+                    <div>
+                        <div class="register_main_detail_container">
+                            <div class="register_title">
+                                <div class="main_title"><span class="title_text_container">用户中心</span></div>
+                                <div class="login_link">
+                                        <span class="title_text_container">
+                                            <span>{{userAccount}}</span>
+                                        </span>
+                                    <div class="reg_link">
+                                            <span class="register_login_link">
+                                            </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-if="isInfo">
+                                <div class="register_input_parentDiv">
+                                    <div class="input_container">
+                                        <div class="input_content">
+                                            <input type="text" tabindex="1" maxlength="80" autocomplete="off" placeholder="姓名" v-model="name"  class="register_input" v-on:blur="nameCheck">
+                                        </div>
+                                    </div>
+                                    <div class="register_input_error_msg" >
+                                        <div class="error_div" v-if="nameError">
+                                            <i class="ic_tips register_icon"></i>
+                                            <span>姓名不能为空</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="register_input_parentDiv">
+                                    <div class="input_container">
+                                        <div class="input_content">
+                                            <input onkeyup="value=value.replace(/[\u4e00-\u9fa5]/ig,'')" type="text" tabindex="1" maxlength="80" autocomplete="off"  placeholder="年龄" v-model="age" class="register_input" v-on:blur="ageCheck">
+                                        </div>
+                                    </div>
+                                    <div class="register_input_error_msg" >
+                                        <div class="error_div" v-if="ageError">
+                                            <i class="ic_tips register_icon"></i>
+                                            <span>年龄为负或为空</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="register_input_parentDiv" style="margin-top: 10px;margin-bottom: 10px;margin-left: 10px">
+                                    <el-radio v-model="sex" label="0">男</el-radio>
+                                    <el-radio v-model="sex" label="1">女</el-radio>
+                                </div>
+                                <div class="que_res_container">
+                                    <div class="register_input_parentDiv">
+                                        <div class="input_container">
+                                            <div class="input_content">
+                                                <input type="text" tabindex="1" maxlength="80" autocomplete="off"  placeholder="密保问题" v-model="userQue" class="register_input" v-on:blur="questionCheck">
+                                            </div>
+                                        </div>
+                                        <div class="register_input_error_msg">
+                                            <div class="error_div" v-if="queError">
+                                                <i class="ic_tips register_icon"></i>
+                                                <span>密保问题不能为空</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <i class="helptip_icon" v-on:mouseover="showHelpTip_Que" v-on:mouseout="coverHelpTip_Que">
+                                        <div class="help_tip_msg_parent" v-if="showHelpTip_que">
+                                            <div class="helptip_msg_ctr" style="top: -22px; left: 35px;" >您的密保问题会在找回密码时显示</div>
+                                            <div class="helptip_triangle"></div>
+                                        </div>
+                                    </i>
+                                </div>
+                                <div class="que_res_container">
+                                    <div class="register_input_parentDiv">
+                                        <div class="input_container">
+                                            <div class="input_content">
+                                                <input type="text" tabindex="1" maxlength="80" autocomplete="off"  placeholder="密保答案" v-model="userRes" class="register_input" v-on:blur="resultCheck">
+                                            </div>
+                                        </div>
+                                        <div class="register_input_error_msg">
+                                            <div class="error_div" v-if="resError">
+                                                <i class="ic_tips register_icon"></i>
+                                                <span>密保答案不能为空</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <i class="helptip_icon" v-on:mouseover="showHelpTip_Res" v-on:mouseout="coverHelpTip_Res">
+                                        <div class="help_tip_msg_parent"  v-if="showHelpTip_res">
+                                            <div class="helptip_msg_ctr" style="top: -22px; left: 35px;" >您的密保答案可以帮助您找回密码</div>
+                                            <div class="helptip_triangle"></div>
+                                        </div>
+                                    </i>
+                                </div>
+                                <div class="register_btn_container">
+                                    <input type="button" value="保存" tabindex="7" class="submit_button" class="lighted" v-on:click="Register">
+                                </div>
+                            </div>
+                            <div v-if="!isInfo">
+                                <div class="register_input_parentDiv">
+                                    <div>
+                                        <div class="register_input_msg_container">
+                                            <div class="input_container">
+                                                <div class="input_content">
+                                                    <input onkeyup="value=value.replace(/[\u4e00-\u9fa5]/ig,'')" type="text" tabindex="1" maxlength="80" autocomplete="off" placeholder="新密码" v-model="password" class="register_input" v-on:blur="passwordCheck" :class="{secOn:!isPwdEyeOn}">
+                                                    <i class="password_eye password_eye_on" v-if="isPwdEyeOn" v-on:click="ChangePwdSec"></i>
+                                                    <i class="password_eye password_eye_off" v-else v-on:click="ChangePwdSec"></i>
+                                                </div>
+                                            </div>
+                                            <div class="register_input_error_msg">
+                                                <div class="error_div" v-if="passwordError">
+                                                    <i class="ic_tips register_icon"></i>
+                                                    <span>密码不能为空</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="register_input_parentDiv">
+                                    <div>
+                                        <div class="register_input_msg_container">
+                                            <div class="input_container">
+                                                <div class="input_content">
+                                                    <input onkeyup="value=value.replace(/[\u4e00-\u9fa5]/ig,'')" type="text" tabindex="1" maxlength="80" autocomplete="off" placeholder="旧密码" v-model="oldpassword" class="register_input" v-on:blur="oldpasswordCheck" :class="{secOn:!isoldPwdEyeOn}">
+                                                    <i class="password_eye password_eye_on" v-if="isoldPwdEyeOn" v-on:click="ChangeoldPwdSec"></i>
+                                                    <i class="password_eye password_eye_off" v-else v-on:click="ChangeoldPwdSec"></i>
+                                                </div>
+                                            </div>
+                                            <div class="register_input_error_msg">
+                                                <div class="error_div" v-if="oldpasswordError">
+                                                    <i class="ic_tips register_icon"></i>
+                                                    <span>旧密码错误</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="register_btn_container">
+                                    <input type="button" value="保存" tabindex="7" class="submit_button" v-on:click="Register">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer_login></footer_login>
+</div>
+</body>
+<script>
+    new Vue({
+        el:"#app",
+        data(){
+            return{
+                isPwdEyeOn:false,
+                isoldPwdEyeOn:false,
+                isInfo:true,//判断修改安全信息或是个人信息
+                nameError:false,//判断账号（手机邮箱）格式是否正确
+                passwordError:false,//判断密码是否为空
+                oldpasswordError:false,//判断确认密码是否为空
+                queError:false,
+                resError:false,
+                sexError:false,
+                ageError:false,
+                showHelpTip_res:false,
+                showHelpTip_que:false,
+                userAccount:"",
+                sex:"1",
+                name:"",
+                age:"",
+                userRes:"",
+                userQue:"",
+                password:"",
+                oldpassword:"",
+                userInfo:"",
+            }
+        },
+        created(){
+          this.userInfo=JSON.parse(localStorage.getItem("user"));
+          console.log(this.userInfo);
+          this.userAccount=this.userInfo.account;
+          this.sex=this.userInfo.sex.toString();
+          this.name=this.userInfo.name;
+          this.age=this.userInfo.age;
+          this.userRes=this.userInfo.asw;
+          this.userQue=this.userInfo.question;
+        },
+        methods: {
+            nameCheck(){
+                if(this.name==""){
+                    this.nameError=true;
+                }else {
+                    this.nameError=false;
+                }
+            },
+            ageCheck(){
+                if(this.age<0){
+                    this.ageError=true;
+                }else {
+                    this.ageError=false;
+                }
+            },
+            questionCheck(){
+                if(this.userQue==""){
+                    this.queError=true;
+                }else {
+                    this.queError=false;
+                }
+            },
+            resultCheck(){
+                if(this.userRes==""){
+                    this.resError=true;
+                }else {
+                    this.resError=false;
+                }
+            },
+            passwordCheck(){
+                if(this.password==""){
+                    this.passwordError=true;
+                }else {
+                    this.passwordError=false;
+                }
+            },
+            oldpasswordCheck(){
+                if(this.oldpassword!=this.userInfo.password){
+                    this.oldpasswordError=true;
+                }else {
+                    this.oldpasswordError=false;
+                }
+            },
+            onUserInfoChange(){
+                this.isInfo=true;
+            },
+            onUserSecChange(){
+                this.isInfo=false;
+            },
+            showHelpTip_Que(){
+                this.showHelpTip_que=true;
+            },
+            coverHelpTip_Que(){
+                this.showHelpTip_que=false;
+            },
+            showHelpTip_Res(){
+                this.showHelpTip_res=true;
+            },
+            coverHelpTip_Res(){
+                this.showHelpTip_res=false;
+            },
+            ChangeoldPwdSec(){
+                if(this.isoldPwdEyeOn){
+                    this.isoldPwdEyeOn=false;
+                }else {
+                    this.isoldPwdEyeOn=true;
+                }
+            },
+            ChangePwdSec(){
+                if(this.isPwdEyeOn){
+                    this.isPwdEyeOn=false;
+                }else {
+                    this.isPwdEyeOn=true;
+                }
+            },
+            Register(){
+                if(this.isInfo){
+                //    更改个人属性
+                    if(!this.nameError&&!this.queError&&!this.ageError&&!this.resError)
+                    {
+                        var data={
+                            "name":this.name,
+                            "email":this.userInfo.email,
+                            "phone":this.userInfo.phone,
+                            "question":this.userQue,
+                            "asw":this.userRes,
+                            "age":this.age,
+                            "sex":Number(this.sex),
+                        }
+                        axios.post('/actionmall/user/updateuserinfo.do',data).then(res=>{
+                            if(res.data.status==0)
+                            {
+                                this.$message({
+                                    message: "修改成功",
+                                    type: "success"
+                                });
+                            }else {
+                                console.log(res.data.msg);
+                            }
+                        })
+                    }
+                }else {
+                    if(!this.passwordError&&!this.oldpasswordError){
+                        var data={
+                            "newpwd":this.password,
+                            "oldpwd":this.oldpassword,
+                        }
+                        axios.post('/actionmall/user/updatepassword.do',data).then(res=>{
+                            if(res.data.status==0)
+                            {
+                                this.$message({
+                                    message: "修改成功",
+                                    type: "success"
+                                });
+                            }else {
+                                console.log(res.data.msg);
+                            }
+                        })
+                    }
+                }
+            }
+        }
+    })
+</script>
+</html>

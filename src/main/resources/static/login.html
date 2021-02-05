@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./element-ui/index.css">
+    <!-- 先引入 Vue -->
+    <script src="./js/vue.js"></script>
+    <!-- 引入组件库 -->
+    <script src="./element-ui/index.js"></script>
+    <!-- 引入 http-vue-loader -->
+    <script src="./js/httpVueLoader.js"></script>
+    <!-- 引入 axios -->
+    <script src="./js/axios.min.js"></script>
+    <!--通用js-->
+    <script src="./js/common.js"></script>
+    <style>
+        .el-carousel__item h3 {
+            color: #475669;
+            font-size: 14px;
+            opacity: 0.75;
+            line-height: 150px;
+            margin: 0;
+        }
+
+        .el-carousel__item:nth-child(2n) {
+            background-color: #99a9bf;
+        }
+
+        .el-carousel__item:nth-child(2n+1) {
+            background-color: #d3dce6;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <el-container>
+            <el-header>
+                <header-simple></header-simple>
+            </el-header>
+            <el-main>
+                <div class="block">
+                    <el-carousel height="550px" width="1200px">
+                        <el-carousel-item v-for="item in 4" :key="item">
+                            <h3>{{ item }}</h3>
+                        </el-carousel-item>
+                    </el-carousel>
+                </div>
+            </el-main>
+            <el-footer>
+                <footer-simple></footer-simple>
+            </el-footer>
+        </el-container>
+    </div>
+</body>
+<script>
+    // 使用httpVueLoader
+    Vue.use(httpVueLoader);
+    new Vue({
+        el: '#app',
+        data: function () {
+            return {
+                // visible: false
+            }
+        },
+        methods: {
+            //模拟登录
+            login() {
+                const data = {
+                    account: "test_user",
+                    password: "123"
+                }
+                axios.post(SERVER_BASE_URL + '/actionmall/user/do_login.do', data).then(res => {
+                    console.log("login", res.data)
+                    //this.user.account = res.data.data.account
+                    //console.log(res.data.data)
+                    let user = res.data.data
+                    localStorage.setItem("user", JSON.stringify(user))
+                    //console.log(self.location.href,document.referrer)
+                    //返回上一页并刷新
+                    if(self.location.href!=document.referrer)
+                    {
+                        self.location.href=document.referrer
+                    }
+                }, err => {})
+            }
+        },
+        created() {
+            this.login()
+        },
+        components: {
+            // 将组建加入组建库
+            'header-simple': 'url:./components/header-simple.vue',
+            'footer-simple': 'url:./components/footer-simple.vue'
+        }
+    })
+</script>
+
+</html>

@@ -1,0 +1,159 @@
+.cmdty-content {
+    margin-top: 20px;
+    height: 600px;
+}
+
+.cmdty-img {
+    width: 450px;
+    height: 450px;
+    float: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cmdty-img img {
+    max-height: 450px;
+    max-width: 450px;
+}
+
+.cmdty-subImgs {
+    width: 450px;
+    height: 68px;
+    margin-top: 18px;
+}
+
+.cmdty-subImgs-item {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    margin: 5px;
+}
+
+.cmdty-subImgs-item img {
+    max-width: 60px;
+    max-height: 60px;
+}
+
+.cmdty-subImgs-item-selected {
+    border: 1px solid #ca141d;
+}
+
+.cmdty-info {
+    width: 700px;
+    padding: 0 0 30px 30px;
+    position: relative;
+    float: right;
+}
+
+.cmdty-info-name h1 {
+    font-size: 21px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.cmdty-info-price {
+    background: #f5f5f5;
+    padding-top: 14px;
+    padding-bottom: 3px;
+}
+
+.cmdty-info-price span {
+    color: #ca141d;
+    font-size: 24px;
+}
+
+.cmdty-info-delivery {}
+
+.cmdty-info-delivery div {
+    display: inline;
+}
+
+.cmdty-info-no {}
+
+.cmdty-info-no div {
+    display: inline;
+}
+
+.cmdty-item {
+    margin: 10px 0px;
+    padding: 0 10px;
+}
+
+.cmdty-item .cmdty-label {
+    width: 85px;
+    line-height: 40px;
+    display: inline-block;
+}
+
+.cmdty-tabs {
+    position: relative;
+    text-align: center;
+    border-top: 1px solid #dcdcdc;
+    padding-top: 20px;
+}
+
+.cmdty-tab {
+    display: inline;
+    margin: 0 25px;
+    font-size: 18px;
+    padding: 0 10px 6px 10px;
+    color: #a4a4a4;
+}
+
+.cmdty-tab-selected {
+    color: #ca141d;
+    border-bottom: 2px solid #ca141d;
+}
+
+.content-commodity-right-selected {
+    width: 93px;
+    height: 33px;
+    line-height: 33px;
+    text-align: center;
+    display: inline-block;
+    border: 1px solid #41B6E7;
+    background-position: bottom right;
+    background-repeat: no-repeat;
+    background-image: url('../images/selected.png');
+}
+
+.cmdty-buy {
+    border-top: 1px solid #dcdcdc;
+}
+
+.cmdty-buy-way{
+    margin-left: 10px;
+}
+
+.cmdty-buy-way a {
+    display: inline-block;
+    width: 172px;
+    height: 46px;
+    font-size: 18px;
+    line-height: 46px;
+    text-align: center;
+    color: #fff;
+    border-radius: 2px;
+}
+
+.cmdty-buy-way a:hover {
+    opacity: 0.8;
+}
+
+.cmdty-buy-way .buy {
+    background: #ca151d;
+    margin-left: 20px;
+}
+
+.cmdty-buy-way .addCart {
+    background: #fc600c;
+}
+
+.cmdty-buy-pledges div {
+    display: inline;
+}
+
+.cmdty-buy-pledges div div img {
+    margin-top: 7px;
+}

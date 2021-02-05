@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>订单</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./element-ui/index.css">
+    <!-- 先引入 Vue -->
+    <script src="./js/vue.js"></script>
+    <!-- 引入组件库 -->
+    <script src="./element-ui/index.js"></script>
+    <!-- 引入 http-vue-loader -->
+    <script src="./js/httpVueLoader.js"></script>
+    <!-- 引入 axios -->
+    <script src="./js/axios.min.js"></script>
+    <!--通用js-->
+    <script src="./js/common.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <el-container style="width:100%;background-color: #ffffff;">
+            <header-steps :active="active" :cart="cart"></header-steps>
+        </el-container>
+    </div>
+</body>
+<script>
+    console.log(JSON.parse(localStorage.getItem('confirmItems')))
+    // 使用httpVueLoader
+    Vue.use(httpVueLoader);
+    new Vue({
+        el: "#app",
+        data() {
+            return {
+                active: 1,
+                cart: true
+            }
+        },
+        created() {
+            //默认从购物车来，active=1,cart=true
+            //若直接从详情页来，则不渲染'我的购物车'
+            let from = getSearch(window.location.href, 'from')
+            //console.log(from,from == 'cmdty-detail')
+            if (from == 'cmdty-detail') {
+                this.active = 0
+                this.cart = false
+            }
+        },
+        components: {
+            // 将组建加入组建库
+            'header-nav': 'url:./components/header-nav.vue',
+            'header-steps': 'url:./components/header-steps.vue',
+            'footer-nav': 'url:./components/footer-nav.vue'
+        }
+    })
+</script>
+
+</html>

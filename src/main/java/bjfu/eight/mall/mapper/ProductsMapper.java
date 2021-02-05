@@ -1,11 +1,9 @@
 package bjfu.eight.mall.mapper;
 
+import bjfu.eight.mall.entity.po.File;
 import bjfu.eight.mall.entity.po.Products;
 import bjfu.eight.mall.entity.vo.FindProducts;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -60,4 +58,12 @@ public interface ProductsMapper {
 
     @Update("update action_product set name=#{name},product_id=#{productId},parts_id=#{partsId},detail=#{detail},spec_param=#{specParam},price=#{price},stock=#{stock},sub_images=#{subImages}")
     Integer updateProduct(Products products);
+
+    @Insert("insert into file(filename, stream) values(#{filename}, #{stream})")
+    @SelectKey(before = false,keyColumn = "id",keyProperty = "id",
+            statement = "select last_insert_id()",resultType = Integer.class)
+    int insertFile(File file);
+
+    @Select("select * from file where id = #{id}")
+    File selectFile(int id);
 }

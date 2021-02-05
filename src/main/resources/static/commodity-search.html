@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <title>分类查找</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./element-ui/index.css">
+    <link rel="stylesheet" href="./css/commodity-list.css">
+    <!-- 先引入 Vue -->
+    <script src="./js/vue.js"></script>
+    <!-- 引入组件库 -->
+    <script src="./element-ui/index.js"></script>
+    <!-- 引入 http-vue-loader -->
+    <script src="./js/httpVueLoader.js"></script>
+    <!-- 引入 axios -->
+    <script src="./js/axios.min.js"></script>
+    <!--通用js-->
+    <script src="./js/common.js"></script>
+</head>
+
+<body>
+    <div id="app" style="background-color: #f5f5f5;">
+        <el-container>
+            <el-header>
+                <header-nav></header-nav>
+            </el-header>
+            <el-container style="margin-bottom:20px;background-color: #ffffff;box-shadow: 0 3px 6px rgba(0,0,0,0.04);">
+                <header-search :keyword="keyword" :open="open"></header-search>
+            </el-container>
+            <el-main>
+                <div style="width:1200px;margin: 0 auto;">
+                    <!--导航-->
+                    <el-breadcrumb separator-class="el-icon-arrow-right">
+                        <el-breadcrumb-item><a href="index.html">首页</a></el-breadcrumb-item>
+                        <el-breadcrumb-item v-for="item,index in pathName" v-if="item">
+                            <a @click="popPath(index)">
+                                {{item.name}}
+                            </a>
+                        </el-breadcrumb-item>
+                        <!-- <el-breadcrumb-item>产品</el-breadcrumb-item> -->
+                        <!-- <el-breadcrumb-item>活动列表</el-breadcrumb-item>
+                        <el-breadcrumb-item>活动详情</el-breadcrumb-item> -->
+                    </el-breadcrumb>
+                    <!--产品分类-->
+                    <div class="cmdty-category">
+                        <!--一级分类-->
+                        <div class="category">
+                            <div class="category-left" style="font-weight: bolder;">
+                                产品类型
+                            </div>
+                            <div class="category-right">
+                                <ul>
+                                    <li :class="{active: selected_class == 0}"
+                                        @click="selected_class = 0, search(keyword, selected_class)">全部</li>
+                                    <li v-for="cls, index in categories" :key="index"
+                                        :class="{active: selected_class == cls.id}"
+                                        @click="selected_class = cls.id, search(keyword, selected_class)">
+                                        {{cls.name}}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!--三级分类-->
+                        <div class="category-sub" v-if="firstIndex!=-1">
+                            <div class="category-left" style="font-weight: bolder;">
+                                配件类型
+                            </div>
+                            <div class="category-sub-right">
+                                <template v-if="categories!=null">
+                                    <div :class="sub_index==-1&&selected_sub_class == 0?'category-sub-sub-no active':'category-sub-sub-no'"
+                                        @click="sub_index = -1,selected_sub_class = 0,search(keyword, selected_class)">
+                                        不限
+                                    </div>
+                                    <div class="category-sub-sub" v-if="categories[firstIndex].children"
+                                        v-for="item,s_index in categories[firstIndex].children">
+                                        <div class="category-sub-sub-left">
+                                            {{item.name}}
+                                        </div>
+                                        <div class="category-sub-sub-right">
+                                            <ul v-if="item.children">
+                                                <li v-for="subItem in item.children"
+                                                    :class="selected_sub_class == subItem.id?'active':''"
+                                                    @click="sub_index = s_index,selected_sub_class = subItem.id, search(keyword, selected_class,selected_sub_class)">
+                                                    {{subItem.name}}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                    <!--查询结果-->
+                    <div class="commodities">
+                        <div class="commodity-item" v-if="count!=0" v-for="item,index in products"
+                            :style="(index+1)%5 == 0?'margin-right:0px;':''">
+                            <a @click="toCommodityDetail(item.id)">
+                                <p class="commodity-item-img">
+                                    <img :src="SERVER_BASE_URL+item.iconUrl" alt=""></p>
+                                <p class="commodity-item-name">{{item.name}}</p>
+                                <p class="commodity-item-price" v-if="item.price">￥{{item.price.toFixed(2)}}</p>
+                            </a>
+                        </div>
+                        <div v-if="count == 0" style="font-size:14px;">
+                            抱歉，没有找到<span style="color:#d0021b;">{{keyword}}
+                            </span>相关商品
+                        </div>
+                    </div>
+                    <!--分页-->
+                    <div class="pagination center" v-if="count!=0">
+                        <el-pagination background layout="prev, pager, next" :page-size="page_size" :total="count"
+                            @current-change="pageChange">
+                        </el-pagination>
+                    </div>
+                </div>
+            </el-main>
+            <el-footer>
+                <footer-nav></footer-nav>
+            </el-footer>
+        </el-container>
+    </div>
+</body>
+
+<script>
+    // 使用httpVueLoader
+    Vue.use(httpVueLoader);
+    new Vue({
+        el: '#app',
+        data: {
+            categories: null,
+            selected_class: 0,
+            selected_sub_class: 0,
+            products: null,
+            count: 0,
+            page_size: 10,
+            keyword: "",
+            open: true,
+            //二级分类索引
+            sub_index: -1,
+            sub_id: 0
+        },
+        methods: {
+            //获取分类数据
+            getCategoriesData() {
+                axios.get(SERVER_BASE_URL + '/actionmall/param/findallparams.do').then(res => {
+                    console.log("categories", res.data)
+                    if (res.data.status == 0) {
+                        this.categories = res.data.data
+                        let index = this.firstIndex
+                        console.log('first', this.firstIndex)
+                        if (index != -1) {
+                            //获取二级分类索引
+                            for (let i in this.categories[index].children) {
+                                let c = this.categories[index].children[i]
+                                if (this.sub_id == c.id) {
+                                    console.log(c)
+                                    this.sub_index = i
+                                    break
+                                }
+                            }
+                        }
+                    } else {
+                        this.$message(res.data.msg)
+                    }
+                }, err => {
+                    console.log('加载失败')
+                })
+            },
+            //去详情页
+            toCommodityDetail(id) {
+                let tempWindow = window.open("_blank")
+                const params = new URLSearchParams()
+                params.append('id', id)
+                console.log(params.toString())
+                tempWindow.location.href = 'commodity-detail.html?' + params
+            },
+            //切换页面
+            pageChange(page) {
+                //console.log(page)
+                this.search(this.keyword, this.selected_class, this.selected_sub_class, this
+                    .page_size, page);
+            },
+            //分页搜索商品
+            /**
+             * keyword 关键词
+             * selected_class 选中的一级分类ID
+             * selected_sub_class 选中的三级分类ID
+             * page_size 页大小
+             * page_index 页索引
+             * */
+            search(keyword, selected_class, selected_sub_class, page_size, page_index) {
+                if (page_size === undefined) {
+                    page_size = this.page_size;
+                }
+                if (page_index === undefined) {
+                    page_index = 1;
+                }
+                if (selected_class == undefined) {
+                    selected_class = 0;
+                    this.selected_class = 0
+                }
+                if (selected_sub_class == undefined) {
+                    selected_sub_class = 0
+                    this.selected_sub_class = 0
+                }
+                if (keyword == undefined) {
+                    keyword = ''
+                }
+                // if (selected_sub_class != 0) {
+                //     selected_class = 0
+                // }
+                const data = {
+                    productTypeId: Number(selected_class),
+                    partsId: Number(selected_sub_class),
+                    pageNum: page_index,
+                    pageSize: page_size,
+                    name: keyword
+                }
+                console.log("data", data)
+                axios.post(SERVER_BASE_URL + "/actionmall/product/findproducts.do", data).then(res => {
+                    //console.log(res.data)
+                    if (res.data.status === 0) {
+                        this.products = res.data.data.data
+                        //console.log(this.products)
+                        //用于分页
+                        this.count = res.data.data.totalRecord
+                    } else {
+                        this.$message.error(res.data.msg);
+                    }
+                }, err => {});
+            },
+            popPath(index) {
+                console.log('pop', index)
+                switch (index) {
+                    case 0: {
+                        this.sub_index = -1
+                        this.selected_sub_class = 0
+                        break;
+                    }
+                    case 1: {
+                        this.selected_sub_class = 0
+                        break;
+                    }
+                    case 2: {
+                        break;
+                    }
+                }
+                this.search(this.keyword, this.selected_class, this.selected_sub_class)
+            }
+        },
+        computed: {
+            //更新一级分类索引
+            firstIndex() {
+                if (this.selected_class == 0)
+                    return -1
+                else {
+                    for (let i in this.categories) {
+                        let c = this.categories[i]
+                        if (c.id == this.selected_class)
+                            return i
+                    }
+                }
+            },
+            //更新路径
+            pathName() {
+                let index = this.firstIndex
+                let res = [undefined, undefined, undefined]
+                //console.log(this.categories)
+                if (this.categories != null) {
+                    if (index != -1) {
+                        res[0] = this.categories[index]
+                    }
+                    if (this.sub_index != -1 && index != -1) {
+                        res[1] = this.categories[index].children[this.sub_index]
+                    }
+                    if (this.selected_sub_class != 0) {
+                        for (let i in res[1].children) {
+                            let c = res[1].children[i]
+                            if (this.selected_sub_class == c.id) {
+                                res[2] = c
+                                break
+                            }
+                        }
+                    }
+                }
+                return res
+            }
+        },
+        created() {
+            //decodeURI解析中文,关键词
+            this.keyword = getSearch(decodeURI(window.location.href), 'keyword')
+            //一级分类ID
+            this.selected_class = getSearch(window.location.href, 'id')
+            //二级分类ID
+            this.sub_id = getSearch(window.location.href, 'sub_id')
+            //三级分类ID
+            this.selected_sub_class = getSearch(window.location.href, 'sub_sub_id')
+            this.getCategoriesData()
+            this.search(this.keyword, this.selected_class, this.selected_sub_class)
+        },
+        components: {
+            // 将组建加入组建库
+            'header-nav': 'url:./components/header-nav.vue',
+            'header-search': 'url:./components/header-search.vue',
+            'footer-nav': 'url:./components/footer-nav.vue'
+        }
+    })
+</script>
+
+</html>

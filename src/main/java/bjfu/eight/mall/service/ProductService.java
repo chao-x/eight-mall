@@ -1,5 +1,6 @@
 package bjfu.eight.mall.service;
 
+import bjfu.eight.mall.entity.po.File;
 import bjfu.eight.mall.entity.po.Products;
 import bjfu.eight.mall.entity.vo.FindProducts;
 import bjfu.eight.mall.entity.vo.FindProducts2;
@@ -96,4 +97,18 @@ public class ProductService {
         return productsMapper.insertProduct(products) == 1;
     }
 
+    public int uploadFile(String filename, byte[] stream){
+        File file = new File();
+        file.setFilename(filename);
+        file.setStream(stream);
+        int result = productsMapper.insertFile(file);
+        if(result == 0){
+            throw  new RuntimeException("文件存储失败");
+        }
+        return file.getId();
+    }
+
+    public File downloadFile(int id){
+        return productsMapper.selectFile(id);
+    }
 }

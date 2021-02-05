@@ -1,0 +1,131 @@
+.cmdty-category {}
+
+.category {
+    display: flex;
+    background-color: #ffffff;
+    margin-top: 20px;
+}
+
+.category-sub {
+    border-top: 1px solid #eaeaea;
+    display: flex;
+    background-color: #ffffff;
+}
+
+.category-sub-sub {
+    display: flex;
+    background-color: #ffffff;
+}
+
+.category-sub-sub-left {
+    padding: 5px 5px 5px 20px;
+    text-align: left;
+    font-weight: 500;
+    width: 100px;
+}
+
+.category-sub-sub-no {
+    padding: 20px 5px 5px 20px;
+    text-align: left;
+    color: #888888;
+    width: 100px;
+}
+
+.active {
+    color: #ca151d;
+}
+
+.category-sub-sub-right {
+    padding: 5px;
+    color: #888888;
+}
+
+.category-sub-sub-right li {
+    display: inline-block;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.category-left {
+    padding: 20px;
+}
+
+.category-right {
+    padding: 20px;
+}
+
+.category-right li {
+    display: inline-block;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.category-right li.active {
+    color: #ca151d;
+    /* padding: 0 6px;
+    height: 32px;
+    line-height: 32px; */
+}
+
+.commodities {
+    width: 1200px;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.commodity-item {
+    width: 232px;
+    height: 290px;
+    /* border-radius: 10px; */
+    text-align: center;
+    overflow: hidden;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.commodity-item:hover {
+    box-shadow: 0 12px 36px rgb(0 0 0 / 10%);
+}
+
+.commodity-item a {
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    background: #ffffff;
+}
+
+.commodity-item-img {
+    width: 150px;
+    height: 150px;
+    margin: 35px auto 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.commodity-item-img img {
+    max-width: 150px;
+    max-height: 150px;
+}
+
+.commodity-item-name {
+    width: 210px;
+    display: block;
+    margin: 0 auto;
+    padding: 0;
+    margin-top: 12px;
+    height: 21px;
+    line-height: 21px;
+    text-align: center;
+}
+
+.commodity-item-price {
+    color: #d0021b;
+    line-height: 21px;
+    margin-bottom: 12px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 400;
+}

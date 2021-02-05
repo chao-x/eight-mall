@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta charset="UTF-8">
+  <title>首页</title>
+  <!-- 引入样式 -->
+  <link rel="stylesheet" href="./css/reset.css">
+  <link rel="stylesheet" href="./element-ui/index.css">
+  <link rel="stylesheet" href="./css/index.css">
+  <!-- 先引入 Vue -->
+  <script src="./js/vue.js"></script>
+  <!-- 引入组件库 -->
+  <script src="./element-ui/index.js"></script>
+  <!-- 引入 http-vue-loader -->
+  <script src="./js/httpVueLoader.js"></script>
+  <!-- 引入 axios -->
+  <script src="./js/axios.min.js"></script>
+  <!--通用js-->
+  <script src="./js/common.js"></script>
+  <style>
+    .el-carousel {}
+
+    .el-carousel__item div {
+      width: 100%;
+      height: 550px;
+    }
+
+    .el-carousel__item:nth-child(2n) {
+      background-color: #99a9bf;
+    }
+
+    .el-carousel__item:nth-child(2n+1) {
+      background-color: #d3dce6;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <el-container>
+      <!--搜索-->
+      <el-header>
+        <header-nav></header-nav>
+      </el-header>
+      <!--查找-->
+      <el-container>
+        <header-search></header-search>
+      </el-container>
+      <!--主要内容-->
+      <el-main style="padding: 0;">
+        <!--分类导航-->
+        <div class="mall_left">
+          <div class="menu">
+            <ul>
+              <li class="item" v-for="(item,index) in categories" :key="index">
+                <h3 class="item_hd">
+                  <a @click="toCommodityList(item.id)">{{item.name}}</a>
+                  <span class="left_nav_arrow" v-if="item.children.length >0"><img src="./images/common/nav_left.png"
+                      alt=""></span></span>
+                </h3>
+                <div class="sub_category" v-if="item.children.length >0">
+                  <div class="next_menu">
+                    <template v-for="subItem in item.children">
+                      <div class="next_menu_box">
+                        <a @click="toCommodityList(item.id,subItem.id)" class="menu01">
+                          <strong>{{subItem.name}}</strong>
+                          <span v-if="subItem.children.length >0">
+                            &nbsp;&nbsp;&gt;&nbsp;&nbsp;
+                          </span>
+                        </a>
+                        <div class="menu02_box">
+                          <template v-for="subSubItem in subItem.children" v-if="subItem.children.length >0">
+                            <a class="menu02"
+                              @click="toCommodityList(item.id,subItem.id,subSubItem.id)">{{subSubItem.name}}</a>
+                          </template>
+                        </div>
+                      </div>
+                      <div class="menu_greyline" v-if="subItem.children.length >0"></div>
+                    </template>
+                  </div>
+                </div>
+              </li>
+
+            </ul>
+          </div>
+        </div>
+        <!--banner-->
+        <div class="banner-block">
+          <el-carousel height="550px">
+            <el-carousel-item v-for="item in items" :key="item">
+              <div :style="'background: url('+item.url+') no-repeat;'"></div>
+            </el-carousel-item>
+          </el-carousel>
+        </div>
+        <div style="width: 1200px;margin: 0 auto;">
+          <!--热销-->
+          <div class="hot">
+            <h2>热销</h2>
+            <div class="hot-container">
+              <div class="commodity-item" v-for="item in hotItems">
+                <a @click="toCommodityDetail(item.id)">
+                  <p class="commodity-item-img">
+                    <img :src="SERVER_BASE_URL+item.iconUrl" alt=""></p>
+                  <p class="commodity-item-name">{{item.name}}</p>
+                  <p class="commodity-item-price">￥{{item.price.toFixed(2)}}</p>
+                </a>
+              </div>
+            </div>
+          </div>
+          <!--楼层-->
+          <div class="floor-one">
+            <div class="floor-title">
+              <h2 v-if="categories">{{categories[0].name}}</h2>
+              <a @click="toCommodityList(categories[0].id)">查看更多&gt;</a>
+            </div>
+            <div class="floor-content">
+              <div :class="index == 0?'commodity-item-big':'commodity-item'" v-for="(item,index) in oneFloor">
+                <a v-if="index == 0" @click="toCommodityDetail(item.id)">
+                  <!-- <img src="https://res0.vmallres.com/pimages//frontLocation/content/49689392301619398694.png" alt=""> -->
+                  <p class="commodity-em-item-img">
+                    <img :src="SERVER_BASE_URL+item.iconUrl" alt="">
+                  </p>
+                  <p class="commodity-em-item-name">{{item.name}}</p>
+                  <p class="commodity-em-item-price">￥{{item.price.toFixed(2)}}</p>
+                </a>
+                <a @click="toCommodityDetail(item.id)" v-else>
+                  <p class="commodity-item-img">
+                    <img :src="SERVER_BASE_URL+item.iconUrl" alt=""></p>
+                  <p class="commodity-item-name">{{item.name}}</p>
+                  <p class="commodity-item-price">￥{{item.price.toFixed(2)}}</p>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="floor-two">
+            <div class="floor-title">
+              <h2 v-if="categories">{{categories[1].name}}</h2>
+              <a @click="toCommodityList(categories[1].id)">查看更多&gt;</a>
+            </div>
+            <div class="floor-content">
+              <div :class="index == 0?'commodity-item-big':'commodity-item'" v-for="(item,index) in twoFloor">
+                <a v-if="index == 0" @click="toCommodityDetail(item.id)">
+                  <!-- <img src="https://res0.vmallres.com/pimages//frontLocation/content/49689392301619398694.png" alt=""> -->
+                  <p class="commodity-em-item-img">
+                    <img :src="SERVER_BASE_URL+item.iconUrl" alt="">
+                  </p>
+                  <p class="commodity-em-item-name">{{item.name}}</p>
+                  <p class="commodity-em-item-price">￥{{item.price.toFixed(2)}}</p>
+                </a>
+                <a @click="toCommodityDetail(item.id)" v-else>
+                  <p class="commodity-item-img">
+                    <img :src="SERVER_BASE_URL+item.iconUrl" alt=""></p>
+                  <p class="commodity-item-name">{{item.name}}</p>
+                  <p class="commodity-item-price">￥{{item.price.toFixed(2)}}</p>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="floor-three">
+            <div class="floor-title">
+              <h2 v-if="categories">{{categories[2].name}}</h2>
+              <a @click="toCommodityList(categories[2].id)">查看更多&gt;</a>
+            </div>
+            <div class="floor-content">
+              <div :class="index == 0?'commodity-item-big':'commodity-item'" v-for="(item,index) in threeFloor">
+                <a v-if="index == 0" @click="toCommodityDetail(item.id)">
+                  <!-- <img src="https://res0.vmallres.com/pimages//frontLocation/content/49689392301619398694.png" alt=""> -->
+                  <p class="commodity-em-item-img">
+                    <img :src="SERVER_BASE_URL+item.iconUrl" alt="">
+                  </p>
+                  <p class="commodity-em-item-name">{{item.name}}</p>
+                  <p class="commodity-em-item-price">￥{{item.price.toFixed(2)}}</p>
+                </a>
+                <a @click="toCommodityDetail(item.id)" v-else>
+                  <p class="commodity-item-img">
+                    <img :src="SERVER_BASE_URL+item.iconUrl" alt=""></p>
+                  <p class="commodity-item-name">{{item.name}}</p>
+                  <p class="commodity-item-price">￥{{item.price.toFixed(2)}}</p>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="floor-four">
+            <div class="floor-title">
+              <h2 v-if="categories">{{categories[3].name}}</h2>
+              <a @click="toCommodityList(categories[3].id)">查看更多&gt;</a>
+            </div>
+            <div class="floor-content">
+              <div :class="index == 0?'commodity-item-big':'commodity-item'" v-for="(item,index) in fourFloor">
+                <a v-if="index == 0" @click="toCommodityDetail(item.id)">
+                  <!-- <img src="https://res0.vmallres.com/pimages//frontLocation/content/49689392301619398694.png" alt=""> -->
+                  <p class="commodity-em-item-img">
+                    <img :src="SERVER_BASE_URL+item.iconUrl" alt="">
+                  </p>
+                  <p class="commodity-em-item-name">{{item.name}}</p>
+                  <p class="commodity-em-item-price">￥{{item.price.toFixed(2)}}</p>
+                </a>
+                <a @click="toCommodityDetail(item.id)" v-else>
+                  <p class="commodity-item-img">
+                    <img :src="SERVER_BASE_URL+item.iconUrl" alt=""></p>
+                  <p class="commodity-item-name">{{item.name}}</p>
+                  <p class="commodity-item-price">￥{{item.price.toFixed(2)}}</p>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </el-main>
+      <el-footer>
+        <footer-nav></footer-nav>
+      </el-footer>
+      <!-- <el-footer>
+        <footer-simple></footer-simple>
+      </el-footer> -->
+    </el-container>
+  </div>
+
+</body>
+
+<script>
+  // 使用httpVueLoader
+  Vue.use(httpVueLoader);
+  new Vue({
+    el: '#app',
+    data: {
+      items: [{
+        url: 'https://res.vmallres.com/pimages//pages/picImages/55921663111616612955.jpg'
+      }, {
+        url: 'https://res.vmallres.com/pimages//pages/picImages/12357652701615675321.jpg'
+      }, {
+        url: 'https://res.vmallres.com/pimages//pages/picImages/05342766011616724350.jpg'
+      }],
+      categories: null,
+      hotItems: [],
+      oneFloor: [],
+      twoFloor: [],
+      threeFloor: [],
+      fourFloor: []
+    },
+    methods: {
+      //获取分类数据
+      getCategoriesData() {
+        axios.get(SERVER_BASE_URL + '/actionmall/param/findallparams.do').then(res => {
+          console.log("categories", res.data)
+          if (res.data.status == 0) {
+            this.categories = res.data.data
+            localStorage.setItem('categories', JSON.stringify(this.categories))
+          } else {
+            this.$message(res.data.msg)
+          }
+        }, err => {
+          console.log('加载失败')
+        })
+      },
+      //获取热销商品
+      getHotProducts() {
+        const data = {
+          num: '5'
+        }
+        axios.post(SERVER_BASE_URL + "/actionmall/product/findhotproducts.do", data).then(res => {
+          console.log('hot', res.data)
+          if (res.data.status == 0) {
+            this.hotItems = res.data.data
+          } else {
+            this.$message(res.data.msg)
+          }
+        }, err => {});
+      },
+      //获取楼层商品
+      getFloors() {
+        axios.post(SERVER_BASE_URL + "/actionmall/product/findfloors.do").then(res => {
+          console.log('floors', res.data)
+          if (res.data.status == 0) {
+            this.oneFloor = res.data.data.oneFloor
+            this.twoFloor = res.data.data.twoFloor
+            this.threeFloor = res.data.data.threeFloor
+            this.fourFloor = res.data.data.fourFloor
+          } else {
+            this.$message(res.data.msg)
+          }
+        }, err => {});
+      },
+      //去详情页
+      toCommodityDetail(id) {
+        let tempWindow = window.open("_blank")
+        const params = new URLSearchParams()
+        params.append('id', id)
+        console.log(params.toString())
+        tempWindow.location.href = 'commodity-detail.html?' + params
+      },
+      //去分类页
+      /**
+       * id   一级分类ID
+       * sub_id 二级分类ID
+       * sub_sub_id 三级分类ID
+       */
+      toCommodityList(id, sub_id, sub_sub_id) {
+        if (sub_id == undefined) {
+          sub_id = 0
+        }
+        if (sub_sub_id == undefined) {
+          sub_sub_id = 0
+        }
+        const params = new URLSearchParams()
+        params.append('id', id)
+        params.append('sub_id', sub_id)
+        params.append('sub_sub_id', sub_sub_id)
+        let tempWindow = window.open("_blank")
+        tempWindow.location.href = 'commodity-search.html?' + params
+      }
+    },
+    created() {
+      this.getCategoriesData()
+      this.getHotProducts()
+      this.getFloors()
+    },
+    components: {
+      // 将组建加入组建库
+      'header-nav': 'url:./components/header-nav.vue',
+      'header-search': 'url:./components/header-search.vue',
+      'footer-nav': 'url:./components/footer-nav.vue'
+    }
+  })
+</script>
+
+</html>

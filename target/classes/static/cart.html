@@ -339,8 +339,8 @@
                 return new Promise((resolve, reject) => {
                     axios.post(SERVER_BASE_URL + '/actionmall/cart/delcarts.do',
                         data).then(res => {
-                        resolve(res)
                         if (res.data.status == 0) {
+                            resolve(res)
                             //更新视图
                             that.commodities.splice(i, 1)
                         } else {

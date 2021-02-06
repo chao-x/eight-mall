@@ -7,12 +7,10 @@ import bjfu.eight.mall.entity.vo.Num;
 import bjfu.eight.mall.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-@CrossOrigin
 @Controller
 public class ProductController {
     @Autowired

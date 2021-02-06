@@ -1,11 +1,9 @@
 package bjfu.eight.mall.mapper;
 
+import bjfu.eight.mall.entity.po.File;
 import bjfu.eight.mall.entity.po.Products;
 import bjfu.eight.mall.entity.vo.FindProducts;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -55,9 +53,17 @@ public interface ProductsMapper {
     @Update("update action_products set status=#{status},is_hot=#{isHot} where id=#{id}")
     Integer updateById(Products products);
 
-    @Insert("insert into action_products(name,product_id,parts_id,detail,spec_param,price,stock,sub_images) values(#{name},#{productId},#{partsId},#{detail},#{specParam},#{price},#{stock},#{subImages})")
+    @Insert("insert into action_products(name,icon_url,product_id,parts_id,detail,spec_param,price,stock,sub_images) values(#{name},#{iconUrl},#{productId},#{partsId},#{detail},#{specParam},#{price},#{stock},#{subImages})")
     Integer insertProduct(Products products);
 
-    @Update("update action_product set name=#{name},product_id=#{productId},parts_id=#{partsId},detail=#{detail},spec_param=#{specParam},price=#{price},stock=#{stock},sub_images=#{subImages}")
+    @Update("update action_products set name=#{name},icon_url=#{iconUrl},product_id=#{productId},parts_id=#{partsId},detail=#{detail},spec_param=#{specParam},price=#{price},stock=#{stock},sub_images=#{subImages} where id=#{id}")
     Integer updateProduct(Products products);
+
+    @Insert("insert into file(filename, stream) values(#{filename}, #{stream})")
+    @SelectKey(before = false,keyColumn = "id",keyProperty = "id",
+            statement = "select last_insert_id()",resultType = Integer.class)
+    int insertFile(File file);
+
+    @Select("select * from file where id = #{id}")
+    File selectFile(int id);
 }

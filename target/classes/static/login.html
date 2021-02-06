@@ -72,7 +72,7 @@
             //模拟登录
             login() {
                 const data = {
-                    account: "test_user",
+                    account: "test_admin",
                     password: "123"
                 }
                 axios.post(SERVER_BASE_URL + '/actionmall/user/do_login.do', data).then(res => {

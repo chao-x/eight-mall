@@ -10,7 +10,9 @@
                     <el-menu-item index="4"><a href="register.html">注册</a></el-menu-item>
                 </template>
                 <template v-else>
-                    <el-menu-item index="3">{{user.account}}</el-menu-item>
+                    <el-menu-item index="3"><a href="./../userCenter.html">
+                            {{user.account}}
+                        </a></el-menu-item>
                     <el-menu-item index="4" @click="logout">登出</el-menu-item>
                 </template>
                 <el-menu-item index="5" @click="toOrder">我的订单</el-menu-item>

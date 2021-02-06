@@ -116,7 +116,8 @@
               <a @click="toCommodityList(categories[0].id)">查看更多&gt;</a>
             </div>
             <div class="floor-content">
-              <div :class="index == 0?'commodity-item-big':'commodity-item'" v-for="(item,index) in oneFloor">
+              <div :class="index == 0?'commodity-item-big':'commodity-item'" v-for="(item,index) in oneFloor"
+                v-show="index < 9">
                 <a v-if="index == 0" @click="toCommodityDetail(item.id)">
                   <!-- <img src="https://res0.vmallres.com/pimages//frontLocation/content/49689392301619398694.png" alt=""> -->
                   <p class="commodity-em-item-img">
@@ -140,7 +141,8 @@
               <a @click="toCommodityList(categories[1].id)">查看更多&gt;</a>
             </div>
             <div class="floor-content">
-              <div :class="index == 0?'commodity-item-big':'commodity-item'" v-for="(item,index) in twoFloor">
+              <div :class="index == 0?'commodity-item-big':'commodity-item'" v-for="(item,index) in twoFloor"
+                v-show="index < 9">
                 <a v-if="index == 0" @click="toCommodityDetail(item.id)">
                   <!-- <img src="https://res0.vmallres.com/pimages//frontLocation/content/49689392301619398694.png" alt=""> -->
                   <p class="commodity-em-item-img">
@@ -164,7 +166,8 @@
               <a @click="toCommodityList(categories[2].id)">查看更多&gt;</a>
             </div>
             <div class="floor-content">
-              <div :class="index == 0?'commodity-item-big':'commodity-item'" v-for="(item,index) in threeFloor">
+              <div :class="index == 0?'commodity-item-big':'commodity-item'" v-for="(item,index) in threeFloor"
+                v-show="index < 9">
                 <a v-if="index == 0" @click="toCommodityDetail(item.id)">
                   <!-- <img src="https://res0.vmallres.com/pimages//frontLocation/content/49689392301619398694.png" alt=""> -->
                   <p class="commodity-em-item-img">
@@ -188,7 +191,8 @@
               <a @click="toCommodityList(categories[3].id)">查看更多&gt;</a>
             </div>
             <div class="floor-content">
-              <div :class="index == 0?'commodity-item-big':'commodity-item'" v-for="(item,index) in fourFloor">
+              <div :class="index == 0?'commodity-item-big':'commodity-item'" v-for="(item,index) in fourFloor"
+                v-show="index < 9">
                 <a v-if="index == 0" @click="toCommodityDetail(item.id)">
                   <!-- <img src="https://res0.vmallres.com/pimages//frontLocation/content/49689392301619398694.png" alt=""> -->
                   <p class="commodity-em-item-img">

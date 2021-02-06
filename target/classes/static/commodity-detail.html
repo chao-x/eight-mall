@@ -265,9 +265,9 @@
                 console.log(this.address)
             },
             //获取商品详情
-            getProductDetail(productId) {
+            getProductDetail(id) {
                 const data = {
-                    'id': Number(productId)
+                    'id': Number(id)
                 };
                 axios.post(SERVER_BASE_URL + '/actionmall/product/getdetail.do', data).then(res => {
                     console.log(res.data)
@@ -297,13 +297,10 @@
                     const cartItem = {
                         'userId': user.id,
                         'productId': this.commodity.id,
-                        'name': this.commodity.name,
-                        'iconUrl': this.commodity.iconUrl,
-                        'price': this.commodity.price,
-                        'stock': this.commodity.stock,
                         'quantity': this.num,
                         'checked': true
                     }
+                    //与点击购物车去结算时，缓存信息
                     let confirmItems = []
                     confirmItems.push(cartItem)
                     //缓存确认的商品
@@ -369,7 +366,6 @@
                         'name': this.commodity.name,
                         'iconUrl': this.commodity.iconUrl,
                         'price': this.commodity.price,
-                        'stock': this.commodity.stock,
                         'quantity': this.num,
                         'checked': true
                     }

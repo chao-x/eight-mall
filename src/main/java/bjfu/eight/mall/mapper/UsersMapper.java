@@ -24,7 +24,7 @@ public interface UsersMapper {
     @Update("update action_users set name=#{name},account=#{account},age=#{age},phone=#{phone},email=#{email},sex=#{sex} where id=#{id}")
     public Integer updateUsers(User users);
 
-    @Update("update action_users set email=#{email},phone=#{phone},question=#{question},asw=#{asw},sex=#{sex},age=#{age} where id=#{id}")
+    @Update("update action_users set email=#{email},phone=#{phone},question=#{question},asw=#{asw},sex=#{sex},age=#{age},name=#{name} where id=#{id}")
     public Integer updateUsers2(User users);
 
     @Update("update action_users set password=#{newpwd} where id=#{id} and password=#{oldpwd}")

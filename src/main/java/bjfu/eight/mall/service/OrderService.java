@@ -33,50 +33,57 @@ public class OrderService {
 
     public OrderDetail getdetail(long orderNo){
         Order order=ordersMapper.getByOrderno(orderNo);
-        int orderId=order.getId();
-        int addrId=order.getAddrId();
-        Item[] items=itemsMapper.getByOrderid(orderId);
-        Address address=addressMapper.getByAddrid(addrId);
-        OrderDetail orderDetail=new OrderDetail();
-        orderDetail.setAddress(address);
-        orderDetail.setAddrId(addrId);
-        orderDetail.setAmount(order.getAmount());
-        orderDetail.setCloseTime(order.getCloseTime());
-        orderDetail.setCreated(order.getCreated());
-        orderDetail.setDeliveryTime(order.getDeliveryTime());
-        orderDetail.setFinishTime(order.getFinishTime());
-        orderDetail.setFreight(order.getFreight());
-        orderDetail.setOrderItems(items);
-        orderDetail.setOrderNo(orderNo);
-        orderDetail.setPaymentTime(order.getPaymentTime());
-        orderDetail.setType(order.getType());
-        orderDetail.setTypeDesc("在线支付");
-        orderDetail.setStatus(order.getStatus());
-        if(order.getStatus()==1){
-            orderDetail.setStatusDesc("未付款");
+        if(order != null)
+        {
+            int orderId=order.getId();
+            int addrId=order.getAddrId();
+            Item[] items=itemsMapper.getByOrderid(orderId);
+            Address address=addressMapper.getByAddrid(addrId);
+            OrderDetail orderDetail=new OrderDetail();
+            orderDetail.setAddress(address);
+            orderDetail.setAddrId(addrId);
+            orderDetail.setAmount(order.getAmount());
+            orderDetail.setCloseTime(order.getCloseTime());
+            orderDetail.setCreated(order.getCreated());
+            orderDetail.setDeliveryTime(order.getDeliveryTime());
+            orderDetail.setFinishTime(order.getFinishTime());
+            orderDetail.setFreight(order.getFreight());
+            orderDetail.setOrderItems(items);
+            orderDetail.setOrderNo(orderNo);
+            orderDetail.setPaymentTime(order.getPaymentTime());
+            orderDetail.setType(order.getType());
+            orderDetail.setTypeDesc("在线支付");
+            orderDetail.setStatus(order.getStatus());
+            if(order.getStatus()==1){
+                orderDetail.setStatusDesc("未付款");
+            }
+            else if(order.getStatus()==2){
+                orderDetail.setStatusDesc("已付款");
+            }
+            else if(order.getStatus()==3){
+                orderDetail.setStatusDesc("已发货");
+            }
+            else if(order.getStatus()==4){
+                orderDetail.setStatusDesc("交易成功");
+            }
+            else if(order.getStatus()==5){
+                orderDetail.setStatusDesc("交易关闭");
+            }
+            else if(order.getStatus()==6){
+                orderDetail.setStatusDesc("已取消");
+            }
+            orderDetail.setDeliveryName(address.getName());
+            return orderDetail;
+        }else{
+            return null;
         }
-        else if(order.getStatus()==2){
-            orderDetail.setStatusDesc("已付款");
-        }
-        else if(order.getStatus()==3){
-            orderDetail.setStatusDesc("已发货");
-        }
-        else if(order.getStatus()==4){
-            orderDetail.setStatusDesc("交易成功");
-        }
-        else if(order.getStatus()==5){
-            orderDetail.setStatusDesc("交易关闭");
-        }
-        else if(order.getStatus()==6){
-            orderDetail.setStatusDesc("已取消");
-        }
-        orderDetail.setDeliveryName(address.getName());
-        return orderDetail;
     }
 
     public int cancelOrder(long orderNo){
         return ordersMapper.updateStatus(6,orderNo);
     }
+
+    public int sentOrder(long orderNo){return ordersMapper.updateStatus(3,orderNo);}
 
     public OrderList getList(int uid,int status){
         if(status==0){

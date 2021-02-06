@@ -2,6 +2,7 @@ package bjfu.eight.mall.controller.backstage;
 
 import bjfu.eight.mall.common.HTTP;
 import bjfu.eight.mall.entity.po.User;
+import bjfu.eight.mall.service.OrderService;
 import bjfu.eight.mall.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,8 @@ import java.util.List;
 public class UserControllerBack {
     @Autowired
     UserService userService;
+    @Autowired
+    OrderService orderService;
 
     //更新用户信息接口
     @PostMapping("/actionmall/mgr/user/updateuser.do")
@@ -48,9 +51,10 @@ public class UserControllerBack {
     @PostMapping("/actionmall/mgr/user/deleteusers.do")
     @ResponseBody
     public HTTP deleteUserBack(@RequestBody User user) {
-        if (!userService.deleteUser(user.getId())) {
+        if (orderService.getList(user.getId(),0).getOrderDetails().length!=0) {
             return HTTP.ERROR("用户存在订单无法删除");
         } else {
+            userService.deleteUser(user.getId());
             return HTTP.SUCCESS();
         }
     }

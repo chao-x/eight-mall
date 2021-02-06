@@ -122,7 +122,7 @@
         	},
         	/* 打开编辑窗口 */
         	open_dialog_edit(item){
-				this.dialogFormItem = item;
+				this.dialogFormItem = JSON.parse(JSON.stringify(item));
 				this.dialogFormVisible = true;
         	},
         	/* 远程新增或更新类型 */
@@ -172,6 +172,7 @@
 								type: "success"
 							});
 							this.dialogFormVisible = false;
+							this.load_classes();
         				}else{
         					if(response.data.msg){
         						console.log(response.data.msg);

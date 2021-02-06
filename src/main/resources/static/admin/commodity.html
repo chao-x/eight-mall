@@ -139,6 +139,7 @@
 					"id":id
 				}
 				axios.post("/actionmall/mgr/product/productlist.do", data).then(response=>{
+					console.log(response.data)
 					if(response.data.status === 0){
 						if(!Array.isArray(response.data.data)){
 							response.data.data = [response.data.data];

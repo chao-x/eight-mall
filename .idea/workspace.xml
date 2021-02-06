@@ -21,28 +21,19 @@
   <component name="ChangeListManager">
     <list default="true" id="8677da39-814d-4de0-b8d8-b06766593e47" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bjfu/eight/mall/controller/backstage/ProductControllerBack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bjfu/eight/mall/controller/backstage/ProductControllerBack.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bjfu/eight/mall/controller/web/AddressController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bjfu/eight/mall/controller/web/AddressController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bjfu/eight/mall/controller/web/CartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bjfu/eight/mall/controller/web/CartController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bjfu/eight/mall/controller/web/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bjfu/eight/mall/controller/web/OrderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bjfu/eight/mall/controller/web/ParamController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bjfu/eight/mall/controller/web/ParamController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bjfu/eight/mall/controller/web/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bjfu/eight/mall/controller/web/ProductController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bjfu/eight/mall/controller/web/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bjfu/eight/mall/controller/web/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bjfu/eight/mall/mapper/ProductsMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bjfu/eight/mall/mapper/ProductsMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bjfu/eight/mall/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bjfu/eight/mall/service/ProductService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/cart.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/cart.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bjfu/eight/mall/controller/backstage/ProductControllerBack.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bjfu/eight/mall/controller/backstage/ProductControllerBack.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bjfu/eight/mall/controller/web/AddressController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bjfu/eight/mall/controller/web/AddressController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bjfu/eight/mall/controller/web/CartController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bjfu/eight/mall/controller/web/CartController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bjfu/eight/mall/controller/web/OrderController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bjfu/eight/mall/controller/web/OrderController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bjfu/eight/mall/controller/web/ParamController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bjfu/eight/mall/controller/web/ParamController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bjfu/eight/mall/controller/web/ProductController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bjfu/eight/mall/controller/web/ProductController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bjfu/eight/mall/controller/web/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bjfu/eight/mall/controller/web/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bjfu/eight/mall/mapper/ProductsMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bjfu/eight/mall/mapper/ProductsMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bjfu/eight/mall/service/ProductService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bjfu/eight/mall/service/ProductService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/cart.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/cart.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bjfu/eight/mall/controller/backstage/OrderControllerBack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bjfu/eight/mall/controller/backstage/OrderControllerBack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bjfu/eight/mall/controller/backstage/UserControllerBack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bjfu/eight/mall/controller/backstage/UserControllerBack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bjfu/eight/mall/entity/po/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bjfu/eight/mall/entity/po/Order.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bjfu/eight/mall/entity/vo/OrderDetail.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bjfu/eight/mall/entity/vo/OrderDetail.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bjfu/eight/mall/service/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bjfu/eight/mall/service/OrderService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/commodity.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/admin/commodity.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/order.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/admin/order.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/type.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/admin/type.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/bjfu/eight/mall/controller/backstage/OrderControllerBack.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bjfu/eight/mall/controller/backstage/OrderControllerBack.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/bjfu/eight/mall/service/OrderService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bjfu/eight/mall/service/OrderService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/admin/commodity.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/admin/commodity.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/admin/order.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/admin/order.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/admin/type.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/admin/type.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,7 +115,7 @@
       <workItem from="1612242671129" duration="246000" />
       <workItem from="1612268669830" duration="1083000" />
       <workItem from="1612529210804" duration="10208000" />
-      <workItem from="1612583936639" duration="3393000" />
+      <workItem from="1612583936639" duration="9754000" />
     </task>
     <servers />
   </component>
@@ -160,41 +151,45 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="549" y="110" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1612268740714" />
-    <state width="1493" height="247" key="GridCell.Tab.0.bottom" timestamp="1612588039667">
+    <state width="1493" height="183" key="GridCell.Tab.0.bottom" timestamp="1612594767754">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="247" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1612588039667" />
-    <state width="1493" height="247" key="GridCell.Tab.0.center" timestamp="1612588039667">
+    <state width="1493" height="183" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1612594767754" />
+    <state width="1493" height="183" key="GridCell.Tab.0.center" timestamp="1612594767753">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="247" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1612588039667" />
-    <state width="1493" height="247" key="GridCell.Tab.0.left" timestamp="1612588039667">
+    <state width="1493" height="183" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1612594767753" />
+    <state width="1493" height="183" key="GridCell.Tab.0.left" timestamp="1612594767753">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="247" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1612588039667" />
-    <state width="1493" height="247" key="GridCell.Tab.0.right" timestamp="1612588039667">
+    <state width="1493" height="183" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1612594767753" />
+    <state width="1493" height="183" key="GridCell.Tab.0.right" timestamp="1612594767753">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="247" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1612588039667" />
-    <state width="1493" height="247" key="GridCell.Tab.1.bottom" timestamp="1612588039668">
+    <state width="1493" height="183" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1612594767753" />
+    <state width="1493" height="183" key="GridCell.Tab.1.bottom" timestamp="1612594767754">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="247" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1612588039668" />
-    <state width="1493" height="247" key="GridCell.Tab.1.center" timestamp="1612588039668">
+    <state width="1493" height="183" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1612594767754" />
+    <state width="1493" height="183" key="GridCell.Tab.1.center" timestamp="1612594767754">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="247" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1612588039668" />
-    <state width="1493" height="247" key="GridCell.Tab.1.left" timestamp="1612588039668">
+    <state width="1493" height="183" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1612594767754" />
+    <state width="1493" height="183" key="GridCell.Tab.1.left" timestamp="1612594767754">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="247" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1612588039668" />
-    <state width="1493" height="247" key="GridCell.Tab.1.right" timestamp="1612588039668">
+    <state width="1493" height="183" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1612594767754" />
+    <state width="1493" height="183" key="GridCell.Tab.1.right" timestamp="1612594767754">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="247" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1612588039668" />
+    <state width="1493" height="183" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1612594767754" />
     <state x="270" y="56" key="SettingsEditor" timestamp="1612269012831">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="270" y="56" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1612269012831" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1612594370111">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1612594370111" />
   </component>
 </project>

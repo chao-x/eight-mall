@@ -1,11 +1,14 @@
 package bjfu.eight.mall.entity.po;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 import java.util.Date;
 
 public class Order {
     private int id;
+    @JsonSerialize(using = ToStringSerializer.class)
     private long orderNo;
     private int uid;
     private int addrId;

@@ -59,5 +59,12 @@ public class OrderControllerBack {
         }
     }
 
-
+    @PostMapping("/actionmall/mgr/order/deliverreceipt.do")
+    @ResponseBody
+    public HTTP sendOrder(@RequestBody Order order){
+        if(orderService.sentOrder(order.getOrderNo())!=0){
+            return HTTP.SUCCESS("发货成功！");
+        }
+        else return HTTP.ERROR("失败！");
+    }
 }

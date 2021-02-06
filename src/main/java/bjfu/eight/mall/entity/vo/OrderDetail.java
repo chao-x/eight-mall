@@ -3,10 +3,13 @@ package bjfu.eight.mall.entity.vo;
 import bjfu.eight.mall.entity.po.Address;
 import bjfu.eight.mall.entity.po.Item;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 import java.util.Date;
 
 public class OrderDetail {
+    @JsonSerialize(using = ToStringSerializer.class)
     private long orderNo;
     private double amount;
     private int type;

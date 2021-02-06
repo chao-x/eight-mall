@@ -177,7 +177,12 @@
 					axios.post("/actionmall/mgr/order/search.do", data).then(response=>{
 						console.log(response.data,data)
 						if(response.data.status === 0){
-							this.orders = [response.data.data];
+							if(response.data.data)
+							{
+								this.orders = [response.data.data];
+							}else{
+								this.orders = []
+							}
 						}else{
 							this.$message.error(response.data.msg);
 						}

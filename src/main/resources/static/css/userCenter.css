@@ -70,10 +70,10 @@
     float: left;
 }
 .register_phoneIcon{
-    background-image: url("../image/list_info.svg");
+    background-image: url("../images/list_info.svg");
 }
 .register_emailIcon{
-    background-image: url("../image/list_accountsecurity.svg");
+    background-image: url("../images/list_accountsecurity.svg");
 }
 .register_main_content{
     margin: 0 auto;
@@ -189,7 +189,7 @@
     align-items: flex-start;
 }
 .ic_tips{
-    background-image: url("../image/ic_tips.svg");
+    background-image: url("../images/ic_tips.svg");
 }
 .password_eye{
     right: 0;
@@ -205,7 +205,7 @@
     opacity: .38;
 }
 .helptip_icon{
-    background-image: url("../image/helpTip.svg");
+    background-image: url("../images/helpTip.svg");
     right: -38px;
     background-size: 18px;
     width: 18px;
@@ -259,7 +259,7 @@
     background-image: url("../image/password_eyeon.svg");
 }
 .password_eye_off{
-    background-image: url("../image/password_eyeoff.svg");
+    background-image: url("../images/password_eyeoff.svg");
 }
 .register_btn_container{
     margin-top: 50px;

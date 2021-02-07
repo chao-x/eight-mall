@@ -6,6 +6,7 @@
     <script src="js/vue.js"></script>
     <script src="js/axios.min.js"></script>
     <script src="element-ui/index.js"></script>
+    <script src="js/common.js"></script>
     <script src="components/header_login/header_login.js"></script>
     <script src="components/header_login/footer_login.js"></script>
     <link rel="stylesheet" type="text/css" href="element-ui/index.css">
@@ -284,7 +285,11 @@
                 this.showHelpTip_res=false;
             },
             goto_login(){
-                window.location.href = "/login.html";
+                let tempWindow = window.open("_blank")
+                const params = new URLSearchParams()
+                params.append('tag', "1")
+                console.log(params.toString())
+                tempWindow.location.href = 'login.html?' + params
             },
             Register(){
                 if(!this.accountError&&!this.passwordError&&!this.re_passwordError&&!this.queError&&!this.resError){
@@ -331,7 +336,11 @@
                                         message: "注册成功",
                                         type: "success"
                                     });
-                                    console.log(resultdata);
+                                    setTimeout(() => {
+                                        if (self.location.href != document.referrer) {
+                                            self.location.href = document.referrer
+                                        }
+                                    }, 2000);
                                 }
                             })
                         }

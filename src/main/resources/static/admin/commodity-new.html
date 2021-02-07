@@ -184,13 +184,14 @@
 						const isJPG = file.type === 'image/jpeg';
 						const isPNG = file.type === 'image/png';
 						const isBMP = file.type === 'image/bmp';
-						const isLt10M = file.size / 1024 / 1024 < 10;
+						console.log(file)
+						const isMax = file.size / 1024 < 20;
 						if(!isJPG && !isPNG && !isBMP){
 							this.$message.error('上传图片只能是JPG/PNG/BMP 格式!');
 							return false;
 						}
-						if(!isLt10M){
-							this.$message.error('上传图片必须小于10M');
+						if(!isMax){
+							this.$message.error('上传图片必须小于20KB');
 							return false;
 						}
 						return true
@@ -359,7 +360,7 @@
 						if(onNewHtml){
 							editor.customConfig.onchange = onNewHtml;
 						}
-						editor.customConfig.uploadImgMaxSize = 10 * 1024 * 1024; // 10M
+						editor.customConfig.uploadImgMaxSize = 20 * 1024; // 20kb
 						editor.customConfig.uploadImgAccept = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg'];
 						editor.customConfig.uploadImgMaxLength = 1; //最多只能上传1张
 						editor.customConfig.customUploadImg =  (resultFiles, insertImgFn) => {
